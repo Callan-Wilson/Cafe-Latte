@@ -1,0 +1,83 @@
+<template>
+  <div class="pt-10 flex flex-col items-center pridi">
+    <h1 class="text-4xl mb-8">Get in touch!</h1>
+    <p class="text-md text-center mb-8 max-w-[900px]">
+      Welcome to Cafe Latte, an exquisite destination nestled in the heart of
+      Melbourne, where elegance meets unparalleled flavor. Our dedicated team
+      awaits the pleasure of assisting you in every possible way. Whether you
+      seek a delightful culinary experience or have inquiries about our
+      offerings, our contact page is your gateway to reaching us – a seamless
+      blend of professionalism and warmth, just like our signature beverages.
+    </p>
+    <div class="contact-form px-12">
+      <div class="input-row my-20">
+        <div class="input-group">
+          <input type="text" class="input" placeholder="First Name" />
+        </div>
+        <div class="input-group">
+          <input type="text" class="input" placeholder="Last Name" />
+        </div>
+      </div>
+      <div class="input-row my-20">
+        <div class="input-group">
+          <input type="email" class="input" placeholder="Email" />
+        </div>
+        <div class="input-group">
+          <input type="tel" class="input" placeholder="Phone Number" />
+        </div>
+      </div>
+      <div class="input-row mt-20 mb-10">
+        <div class="input-group !w-[90%]">
+          <textarea class="textarea" placeholder="Message"></textarea>
+        </div>
+      </div>
+    </div>
+    <button class="py-4 px-14 rounded bg-black">
+      <p class="text-white text-xl">Send</p>
+    </button>
+  </div>
+</template>
+
+<script setup>
+// No script logic required for this example
+</script>
+
+<style scoped>
+.contact-form {
+  max-width: 800px;
+  width: 50vw;
+  margin: auto;
+
+  /* border: 1px solid #ccc; */
+}
+
+.input-row {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.input-group {
+  width: 40%;
+  position: relative;
+}
+
+.input {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  outline: none;
+}
+
+.textarea {
+  border: 1px solid #ddd;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  height: 200px;
+  resize: none;
+  outline: none;
+}
+</style>

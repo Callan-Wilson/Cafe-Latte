@@ -1,25 +1,12 @@
 @import "./tailwind.css";
 @import "./base.css";
 
-#app {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 2rem;
 
-	font-weight: normal;
-}
 
-a,
-.green {
-	text-decoration: none;
-	color: hsla(160, 100%, 37%, 1);
-	transition: 0.4s;
-}
+
 
 @media (hover: hover) {
-	a:hover {
-		background-color: hsla(160, 100%, 37%, 0.2);
-	}
+
 }
 
 @media (min-width: 1024px) {
@@ -28,9 +15,54 @@ a,
 		place-items: center;
 	}
 
-	#app {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
-		padding: 0 2rem;
-	}
+	
 }
+
+.nav-padding{
+	padding-top: 80px;
+}
+.footer-padding{
+	padding-bottom: 308px;
+}
+
+@font-face {
+	font-family: 'Dancing Script';
+	src: url('../assets/fonts/DancingScript/DancingScript-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+  }
+@font-face {
+	font-family: 'Dancing Script';
+	src: url('../assets/fonts/DancingScript/DancingScript-Bold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: bold;
+  }
+
+  @font-face {
+	font-family: 'Pridi';
+	src: url('../assets/fonts/Pridi/Pridi-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+  }
+  @font-face {
+	font-family: 'Pridi';
+	src: url('../assets/fonts/Pridi/Pridi-Bold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+  }
+
+  .pridi{
+	font-family: 'Pridi';
+	
+  }
+
+   /* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+	display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+ *{
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+  } 
