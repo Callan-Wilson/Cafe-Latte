@@ -28,7 +28,7 @@
     </div>
 
 </div>
-<button class="py-4 px-14 rounded bg-black mt-10" @click="goTo()">
+<button class="py-4 px-14 rounded bg-black mt-10 mb-8" @click="goTo()">
   <p class="text-white text-xl">Book in a function today!</p>
 </button>
 
