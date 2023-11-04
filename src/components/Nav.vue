@@ -1,5 +1,5 @@
 <template>
-  <div class="white py-4 w-full flex z-50 flex shadow">
+  <div class="bg-white white py-4 w-full flex z-50 flex shadow">
     <div v-if="route.name" class="flex items-center w-1/3 pl-10">
       <p
         v-for="option in navItems"
@@ -20,13 +20,15 @@
       </p>
     </div>
     <div class="h-full flex items-center justify-center w-1/3">
-      <img class="mr-4 latte-logo cursor-pointer" src="../assets/logo.png" />
+      <img @click="goTo('./')" class="mr-4 latte-logo cursor-pointer" src="../assets/logo.png" />
     </div>
     <div class="flex justify-end items-center w-1/3 pr-10">
       <a href="https://www.instagram.com/cafelattehawksburn/" target="blank">
         <img class="mr-4 social-icon cursor-pointer" src="../assets/instagram.png" />
       </a>
+      <a href="https://www.facebook.com/cafelattehawksburn/" target="blank">
       <img class="social-icon cursor-pointer" src="../assets/facebook.png" />
+      </a>
     </div>
   </div>
 </template>

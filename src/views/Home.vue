@@ -38,11 +38,15 @@
         alt="Banner Image"
       />
     </div>
-    <div>
+    <div style="height: 500px;" class="flex flex-col justify-center ">
+      <h1 class="text-2xl text-center">Functions content here once assets are obtained</h1>
+    </div>
+    <div class="my-4">
+      <h1 class="text-center text-3xl mt-4 pridi">Some Snaps From Our Insta</h1>
       <Gallery />
     </div>
     <div class="w-full flex">
-      <div class="w-1/2 pridi p-20">
+      <div class="w-1/2 pridi p-10">
         <h1 class="text-4xl text-center mb-10 underline">
           Location and Opening Times
         </h1>

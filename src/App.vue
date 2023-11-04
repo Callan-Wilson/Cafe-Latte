@@ -24,6 +24,10 @@ import Footer from '@/components/Footer.vue'
 
 <style scoped>
 
+*{
+    background-color: #fbf7f5;
+}
+
 .fadeOut-enter-active,
 .fadeOut-leave-active {
     transition: opacity 0.3s;

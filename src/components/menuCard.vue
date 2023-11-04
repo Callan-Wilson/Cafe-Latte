@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-[450px]   flex rounded flex-col  shadow-lg w-full pb-2"
+    class="max-h-[500px] h-full   flex rounded flex-col  shadow-lg w-full pb-2"
   >
     <img :src="menuItem.image" alt="Menu Item" class="menu-item-image mb-2" />
     <div class="flex-grow flex flex-col justify-between">

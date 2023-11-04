@@ -15,6 +15,7 @@
           :class="{
             'text-black': route.name.includes(item.title.toLowerCase()),
           }"
+          @click="goTo(item.path)"
         >
           {{ item.title }}
           <span
@@ -34,6 +35,7 @@
           :class="{
             'text-black': route.name.includes(item.title.toLowerCase()),
           }"
+          @click="goTo(item.path)"
         >
           {{ item.title }}
           <span
@@ -53,6 +55,7 @@
           :class="{
             'text-black': route.name.includes(item.title.toLowerCase()),
           }"
+          @click="goTo(item.path)"
         >
           {{ item.title }}
           <span
@@ -81,19 +84,24 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
+
+const goTo = (path) => {
+  router.push(path);
+}
 
 const firstColItems = [
   {
     title: "Home",
     path: "/",
   },
-  {
-    title: "About Us",
-    path: "/about-us",
-  },
+  // {
+  //   title: "About Us",
+  //   path: "/about-us",
+  // },
   {
     title: "Functions",
     path: "/functions",

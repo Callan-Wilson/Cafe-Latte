@@ -33,7 +33,7 @@
           />
         </div>
       </div>
-      <div v-else class="h-[1000px] pt-20">
+      <div v-else class="h-[1000px] w-full  pt-20" style="max-width: 1000px">
         <Spinner   />
 
       </div>

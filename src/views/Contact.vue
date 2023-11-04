@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <button class="py-4 px-14 rounded bg-black">
+    <button class="py-4 px-14 mb-10 rounded bg-black">
       <p class="text-white text-xl">Send</p>
     </button>
   </div>
@@ -63,16 +63,21 @@
 }
 
 .input {
+  background-color: #fbf7f5;
   border: none;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #333333;
   width: 100%;
   padding: 10px 0;
   font-size: 16px;
   outline: none;
 }
 
+input::placeholder, textarea::placeholder {
+  color: #333333; /* Adjust the color to make it slightly darker */
+}
+
 .textarea {
-  border: 1px solid #ddd;
+  border: 1px solid #333333;
   width: 100%;
   padding: 10px;
   font-size: 16px;
