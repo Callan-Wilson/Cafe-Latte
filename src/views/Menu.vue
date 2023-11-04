@@ -10,8 +10,8 @@
       dishes that marry simplicity with the extraordinary, making each visit to
       Cafe Latte a truly memorable and humbly elevated culinary escapade.
     </p>
-    <div class="flex w-full justify-center  pt-8 px-6 relative">
-      <div class="menu-options flex flex-col ml-12 absolute top-0 left-0">
+    <div class="flex w-full justify-center  pt-8 px-6 ">
+      <div class="menu-options flex flex-col  pr-10 1/3">
         <p
           v-for="option in menuFilters"
           :key="option"
@@ -22,20 +22,22 @@
           <span :class="{ 'active-hover-line' : filter === option.toLowerCase()}" class="hover-line"></span>
         </p>
       </div>
-      <div v-if="!loading" class="menu-items px-4 pb-4 mx-auto ">
+      <div v-if="!loading"  class="flex justify-center w-2/3">
+        <div class="menu-items px-4 pb-4 ">
         
-        <menuCard
-          v-for="(item, index) in filteredMenuItems"
-          :key="index"
-          :menuItem="item"
-          :class="changing ? 'slide-y-out' : 'slide-y-in'"
-        />
-    
+          <menuCard
+            v-for="(item, index) in filteredMenuItems"
+            :key="index"
+            :menuItem="item"
+            :class="changing ? 'slide-y-out' : 'slide-y-in'"
+          />
+        </div>
       </div>
       <div v-else class="h-[1000px] pt-20">
         <Spinner   />
 
       </div>
+      <!-- <div class="w-1/4"></div> -->
     </div>
   </div>
 </template>
@@ -99,19 +101,19 @@ onBeforeMount(async () => {
 .menu-options {
   border-right: 2px solid rgb(59, 59, 59);
   min-width: fit-content;
-  width: 10%;
+ 
   height: fit-content;
 }
 
 .menu-items {
-  width: 90%;
+
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 1fr 1fr 1fr;
 
   gap: 30px; /* Gap between grid items */
   height: 1000px;
   overflow-y: scroll;
-  max-width: 1200px;
+  
 }
 
 // .menu-container {

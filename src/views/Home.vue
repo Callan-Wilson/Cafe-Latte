@@ -38,6 +38,9 @@
         alt="Banner Image"
       />
     </div>
+    <div>
+      <Gallery />
+    </div>
     <div class="w-full flex">
       <div class="w-1/2 pridi p-20">
         <h1 class="text-4xl text-center mb-10 underline">
@@ -82,12 +85,15 @@
 import { onBeforeMount, ref } from "vue";
 import { useContentfulStore } from "../stores/contentfulStore";
 import { useRouter } from "vue-router";
+import Gallery from '@/components/gallery.vue'
 
 const router = useRouter();
 
 const goTo = () => {
   router.push("/menu");
 };
+
+
 
 const contentfulStore = useContentfulStore();
 let banner = ref("");

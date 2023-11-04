@@ -20,7 +20,7 @@
       </p>
     </div>
     <div class="h-full flex items-center justify-center w-1/3">
-      <p class="logo-text ">Cafe Latte</p>
+      <img class="mr-4 latte-logo cursor-pointer" src="../assets/logo.png" />
     </div>
     <div class="flex justify-end items-center w-1/3 pr-10">
       <a href="https://www.instagram.com/cafelattehawksburn/" target="blank">
@@ -52,6 +52,11 @@ const goTo = (path) => {
 </script>
 
 <style lang="scss" scoped>
+
+.latte-logo{
+  width: auto;
+  height: 80px;
+}
 .logo-text {
   font-family: "Dancing Script", cursive;
   font-size: 36px;
