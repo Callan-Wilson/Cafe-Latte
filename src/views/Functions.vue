@@ -12,18 +12,20 @@
       tailored precisely to your preferences, promising an ambiance that
       perfectly complements the splendid flavors on offer.
     </p>
-    <h2 class="text-2xl mb-4">Services</h2>
+    <h2 class="text-2xl mb-6">Services</h2>
     <div class="flex w-full max-w-[1000px]">
-    <div class="px-4 w-1/2">
-        <div v-for="service in services1" :key="service" class="flex items-center mb-4 ">
-            <div class="rounded-full bg-black p-1 mr-4"></div>
-            <p class=" break-words">{{ service }}</p>
+        <div class="px-8 w-1/2">
+        <div v-for="service in services1" :key="service" class="flex flex-col justify-center items-center mb-4 ">
+            <!-- <div class="rounded-full bg-black p-1 mr-4"></div> -->
+            <p class="text-center mb-4">{{ service }}</p>
+            <span class="mb-6" style="background-color: #333333; height: 1px; width: 30%;"></span>
         </div>
     </div>
-    <div class="px-4 w-1/2">
-        <div v-for="service in services2" :key="service" class="flex items-center mb-4 ">
-            <div class="rounded-full bg-black p-1 mr-4"></div>
-            <p class=" ">{{ service }}</p>
+    <div class="px-8 w-1/2">
+        <div v-for="service in services2" :key="service" class="flex flex-col justify-center items-center mb-4 ">
+            <!-- <div class="rounded-full bg-black p-1 mr-4"></div> -->
+            <p class="text-center mb-4">{{ service }}</p>
+            <span class="mb-6" style="background-color: #333333; height: 1px; width: 30%;"></span>
         </div>
     </div>
 
