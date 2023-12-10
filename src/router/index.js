@@ -18,8 +18,8 @@ const router = createRouter({
       component: Menu,
     },
     {
-      path: "/contact",
-      name: "contact",
+      path: "/contact-us",
+      name: "contact us",
       component: Contact,
     },
     {

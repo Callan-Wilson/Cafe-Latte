@@ -1,12 +1,14 @@
 <template>
   <div
     v-if="route.name"
-    class="footer w-full flex flex-col px-8  pridi justify-between border border-top relative"
+    class="footer w-full flex flex-col px-8 pridi justify-between border border-top relative"
   >
     <div class="absolute top-0 right-0 p-4">
       <img class="logo" src="../assets/cafeLatteLogo.jpg" />
     </div>
-    <div class="flex w-2/3 justify-around pb-8 pt-[70px] text-lg min-h-content ">
+    <div
+      class="flex w-2/3 justify-around pb-8 pt-4 sm:pt-[70px] text-lg min-h-content"
+    >
       <div class="flex flex-col">
         <p
           v-for="item in firstColItems"
@@ -47,7 +49,7 @@
         </p>
       </div>
       <div class="divider"></div>
-      <div class="flex flex-col ">
+      <div class="hidden sm:flex sm:flex-col">
         <p
           v-for="item in thirdColItems"
           :key="item"
@@ -69,8 +71,14 @@
     </div>
 
     <div class="flex justify-between items-center py-2 w-full">
-      <div class="text-gray-500">Ph | (03) 7036 0084</div>
-      <div class="flex items-center text-gray-500">
+      <div v-if="appStore.isMobile" class="flex flex-col">
+        <div class="text-gray-500">Ph | (03) 7036 0084</div>
+        <div class="flex items-center text-gray-500">
+          <p class="">521 Malvern Rd, Toorak VIC 3142</p>
+        </div>
+      </div>
+      <div class="hidden lg:block text-gray-500">Ph | (03) 7036 0084</div>
+      <div class="hidden lg:flex items-center text-gray-500">
         <img src="../assets/locationIcon.svg" class="location-icon" />
         <p class="ml-2">521 Malvern Rd, Toorak VIC 3142</p>
       </div>
@@ -85,38 +93,62 @@
 <script setup>
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useAppStore } from "../stores/appStore.js";
 
+const appStore = useAppStore();
 const route = useRoute();
 const router = useRouter();
 
 const goTo = (path) => {
   router.push(path);
-}
+};
 
-const firstColItems = [
-  {
-    title: "Home",
-    path: "/",
-  },
-  // {
-  //   title: "About Us",
-  //   path: "/about-us",
-  // },
-  {
-    title: "Functions",
-    path: "/functions",
-  },
-];
-const secondColItems = [
-  {
-    title: "Menu",
-    path: "/menu",
-  },
-  {
-    title: "Bookings",
-    path: "/bookings",
-  },
-];
+const firstColItems = appStore.isMobile
+  ? [
+      {
+        title: "Home",
+        path: "/",
+      },
+      {
+        title: "Functions",
+        path: "/functions",
+      },
+      {
+        title: "Menu",
+        path: "/menu",
+      },
+    ]
+  : [
+      {
+        title: "Home",
+        path: "/",
+      },
+      {
+        title: "Functions",
+        path: "/functions",
+      },
+    ];
+const secondColItems = appStore.isMobile
+  ? [
+      {
+        title: "Bookings",
+        path: "/bookings",
+      },
+      {
+        title: "Contact Us",
+        path: "/contact",
+      },
+    ]
+  : [
+      {
+        title: "Menu",
+        path: "/menu",
+      },
+      {
+        title: "Bookings",
+        path: "/bookings",
+      },
+    ];
 
 const thirdColItems = [
   {

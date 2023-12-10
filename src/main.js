@@ -6,6 +6,8 @@ import router from "./router";
 
 import "./assets/main.css";
 
+import "swiper/css";
+
 
 
 const app = createApp(App);

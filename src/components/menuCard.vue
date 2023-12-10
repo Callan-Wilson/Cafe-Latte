@@ -1,14 +1,23 @@
 <template>
   <div
-    class="max-h-[500px] h-full   flex rounded flex-col  shadow-lg w-full pb-2"
+    class="w-full md:h-[450px] h-full flex rounded flex-col bg-white shadow-lg w-full pb-2"
   >
-    <img :src="menuItem.image" alt="Menu Item" class="menu-item-image mb-2" />
-    <div class="flex-grow flex flex-col justify-between">
+    <img
+      :src="menuItem.image"
+      alt="Menu Item"
+      class="menu-item-image w-full rounded max-h-[250px] md:h-[60%] mb-2"
+    />
+    <div class="flex-shrink lg:flex-grow flex flex-col justify-between">
       <div>
         <div class="flex w-full px-4 mb-1">
           <h3 class="pridi bold text-xl">{{ menuItem.title }}</h3>
         </div>
-        <p class="px-4 pridi">{{ menuItem.description }}</p>
+        <p
+          class="px-4 pridi"
+          :class="{ 'md:text-sm': menuItem.description.length > 150 }"
+        >
+          {{ menuItem.description }}
+        </p>
       </div>
       <div class="dietary-requirements flex items-center justify-center mt-2">
         <div
@@ -21,13 +30,13 @@
           </span>
           <div
             v-if="
-              menuItem.dietary.length > 1 && index != (menuItem.dietary.length - 1)
+              menuItem.dietary.length > 1 &&
+              index != menuItem.dietary.length - 1
             "
             class="bg-black rounded-full w-1 h-1 mx-2"
           ></div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -44,13 +53,11 @@ const props = defineProps({
 </script>
 
 <style scoped>
-
-
 .menu-item-image {
   width: 100%;
-  height: 60%;
+
   object-fit: cover;
-  border-radius: 8px 8px 0 0;
+  border-radius: 8px 8px 0px 0px;
 }
 
 .menu-item-title {

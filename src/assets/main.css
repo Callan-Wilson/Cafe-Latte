@@ -9,21 +9,25 @@
 
 }
 
+.footer-padding{
+	padding-bottom: 270px;
+}
+
 @media (min-width: 1024px) {
 	body {
 		display: flex;
 		place-items: center;
 	}
-
+	.footer-padding{
+		padding-bottom: 308px;
+	}
 	
 }
 
 .nav-padding{
 	padding-top: 80px;
 }
-.footer-padding{
-	padding-bottom: 308px;
-}
+
 
 @font-face {
 	font-family: 'Dancing Script';

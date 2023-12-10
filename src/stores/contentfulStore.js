@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { createClient } from "contentful";
+import utils from "../utils.js"
 
 const client = createClient({
   space: "h4008btd2eyr",
@@ -12,31 +13,136 @@ export const useContentfulStore = defineStore({
   state: () => ({
     home: {
       banner: "",
+      events: {},
+      gallery:[],
+      location:{},
+      loaded: false,
+      galleryLoaded: false,
+    },
+    functions:{
+      text: '',
+      gallery: [],
+      loaded: false,
     },
     menu: {
       items: [],
+      pdf: ''
     },
   }),
-  getters: {},
-  actions: {
-    // async getEntries() {
-    //   try {
-    //     const response = await client.getEntries();
-    //     console.log(response.items);
-    //   } catch (error) {
-    //     console.error("Error fetching Contentful data:", error);
-    //   }
-    // },
 
-    // async getHomeContent() {
-    //   await client
-    //     .getEntry("21cuPdKyJxp3kdYGcqEIUw")
-    //     .then((entry) => {
-    //       console.log(entry);
-    //       this.home.banner = entry.fields.image.fields.file.url;
-    //     })
-    //     .catch(console.error);
-    // },
+  actions: {
+    async loadHomeContent(){
+      try {
+        await Promise.all([this.getHomeContent(), this.getGalleryContent()]);
+        console.log('Content loaded successfully');
+      } catch (error) {
+        console.error('Error loading content:', error);
+      }
+    },
+
+    async getGalleryContent(){
+      await client
+      .getEntries({
+        content_type: "homeGallery",
+      })
+      .then((response) => {
+        if(!response?.items?.length){
+          throw new Error({message: "Couldn't get gallery content"})
+        }
+        let galleryContent = response?.items.map((item) => ({url: item.fields.postUrl, image: utils.getImageUrl(item.fields.image)}))
+       
+        this.$patch((state) => {
+          state.home.gallery = galleryContent;
+          state.home.galleryLoaded = true;
+        });
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+    },
+
+    async getFunctionsContent(){
+      await client
+      .getEntries({
+        content_type: "functionsContent",
+      })
+      .then((response) => {
+        if(!response?.items?.length){
+          throw new Error({message: "Couldn't get gallery content"})
+        }
+    
+        let functionsText = response?.items.find((item) => item.fields.title == 'Functions Text').fields.paragraph
+        let functionsGallery = response?.items.find((item) => item.fields.title == 'Functions Gallery').fields.galleryImage.map((item) => utils.getImageUrl(item))
+  
+        this.$patch((state) => {
+          state.functions.text = functionsText;
+          state.functions.gallery = functionsGallery;
+          state.functions.loaded = true;
+        });
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+    },
+    async getLocationContent(){
+
+    },
+
+   async downloadPdf(){
+      await client
+      .getEntry({
+        content_type: "menuPdf",
+      })
+      .then((response) => {
+        if(!response){
+          throw new Error({message: "Couldn't get menu pdf"})
+        }
+      
+     
+     
+        //patch state
+        this.$patch((state) => {
+          state.menu.pdf = response.fields.pdf.fields.file.url;
+         
+        });
+
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+    },
+
+    async getHomeContent() {
+      await client
+      .getEntries({
+        content_type: "homeContent",
+      })
+      .then((response) => {
+        const content = response?.items.map((item) => item.fields)
+        if(!content.length){
+          throw new Error({message: "Couldn't get home content"})
+        }
+        //banner
+
+        // events
+        let eventsContent = content.find(item => item.title.includes('Event'))
+        eventsContent.image = utils.getImageUrl(eventsContent.image);
+
+        //location
+        const locationContent = content.find(item => item.title.includes('Location'));
+
+        //patch state
+        this.$patch((state) => {
+          state.home.events = eventsContent;
+          state.home.location = locationContent;
+          state.home.loaded = true;
+        });
+
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+    },
     async getMenuItems() {
       await client
         .getEntries({

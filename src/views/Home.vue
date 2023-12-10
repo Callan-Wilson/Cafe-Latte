@@ -1,115 +1,36 @@
 <template>
-  <div v-if="!loading">
-    <div class="banner">
-      <div class="overlay flex justify-center items-center">
-        <div
-          class="overlay-content pridi flex flex-col justify-center items-center px-10 rounded-lg"
-        >
-          <img
-            class="banner-logo my-4"
-            src="../assets/cafeLatteLogoRound.png"
-            alt="logo"
-          />
-          <!-- <div class=" text-black font-bold w-full flex justify-center">
-            <p class="text-xl mr-4">Excellent Coffee.</p>
-            <p class="text-xl mr-4">Delicious Food.</p>
-            <p class="text-xl">Incredible Service.</p>
-          </div> -->
-          <p class="text-2xl text-center mb-8 max-w-[500px] text-white">
-            Indulge in the Essence of Coffee: Immerse Yourself in the Café Latte
-            Experience.
-          </p>
-          <button
-            class="py-4 px-4 rounded transition-all flex mb-8"
-            @click="goTo()"
-          >
-            <p class="text-white text-xl mr-8">Explore our Menu</p>
-            <img
-              class="h-[30px] text-white font-normal"
-              src="../assets/CaretRight.png"
-            />
-          </button>
-        </div>
-      </div>
-      <!-- <img class="banner-image" src="../assets/banner.png" alt="Banner Image" /> -->
-      <img
-        class="banner-image"
-        src="../assets/banner2.png"
-        alt="Banner Image"
-      />
-    </div>
-    <div style="height: 500px;" class="flex flex-col justify-center ">
-      <h1 class="text-2xl text-center">Functions content here once assets are obtained</h1>
-    </div>
-    <div class="my-4">
-      <h1 class="text-center text-3xl mt-4 pridi">Some Snaps From Our Insta</h1>
-      <Gallery />
-    </div>
-    <div class="w-full flex">
-      <div class="w-1/2 pridi p-10">
-        <h1 class="text-4xl text-center mb-10 underline">
-          Location and Opening Times
-        </h1>
-        <p class="text-xl text-center px-4 mb-10">
-          Nestled within the vibrant heart of Hawksburn, Melbourne, Cafe Latte
-          stands as more than just a coffee haven. With a warm and inviting
-          ambiance, it's a cherished gathering spot that mirrors the close-knit
-          community it calls home. Our café proudly intertwines rich espresso
-          aromas with the genuine camaraderie of Hawksburn, crafting an
-          experience that not only satisfies taste buds but also fosters a sense
-          of belonging.
-        </p>
-        <p class="text-2xl text-center underline mb-4">Address</p>
-        <p class="text-center text-xl flex items-center justify-center">
-          <span class="mr-2">
-            <img src="../assets/locationIcon.svg" class="location-icon" />
-          </span>
-          521 Malvern Rd, Toorak VIC 3142
-        </p>
-        <p class="text-2xl text-center underline mb-4 mt-20">Opening Times</p>
-        <p class="text-xl text-center">Open: 6am - 3pm Monday - Sunday</p>
-      </div>
-      <div class="w-1/2 text-center">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3150.524655054859!2d145.00131827674196!3d-37.84801263599772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad6682b17e1b84b%3A0x8494ab429665d4d0!2sCafe%20Latte!5e0!3m2!1sen!2sau!4v1693493737539!5m2!1sen!2sau"
-          class="w-full"
-          height="600"
-          style="border: 0px"
-          frameborder="0"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
-      </div>
-    </div>
+  <div>
+    <MobileBanner v-if="appStore.isMobile" />
+    <Banner v-else />
+    <Events />
+    <Gallery class="my-4" />
+    <Location />
   </div>
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from "vue";
-import { useContentfulStore } from "../stores/contentfulStore";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
-import Gallery from '@/components/gallery.vue'
+import { useContentfulStore } from "../stores/contentfulStore.js";
+import { useAppStore } from "../stores/appStore.js";
+
+// mobile
+import MobileBanner from "@/components/mobile/Banner.vue";
+
+// desktop
+import Banner from "@/components/home/banner.vue";
+import Events from "@/components/home/events.vue";
+import Gallery from "@/components/home/gallery.vue";
+import Location from "@/components/home/location.vue";
 
 const router = useRouter();
 
-const goTo = () => {
-  router.push("/menu");
-};
+const apiStore = useContentfulStore();
+const appStore = useAppStore();
 
-
-
-const contentfulStore = useContentfulStore();
-let banner = ref("");
-let loading = ref(false);
-
-// onBeforeMount(async () => {
-//     loading.value = true;
-//     await contentfulStore.getHomeContent();
-//     banner.value = contentfulStore.home.banner;
-//     console.log(banner.value, 'banner value');
-//     loading.value = false;
-// });
+onMounted(async () => {
+  await apiStore.loadHomeContent();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -119,11 +40,6 @@ let loading = ref(false);
   max-width: 100vw;
   max-height: calc(100vh - 80px);
   overflow: hidden;
-}
-
-.location-icon {
-  height: 18px;
-  width: auto;
 }
 
 .banner-image {
