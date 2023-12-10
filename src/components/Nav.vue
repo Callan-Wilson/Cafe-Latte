@@ -63,7 +63,7 @@ const navItems = ref([
   { title: "Home", path: "/" },
   { title: "Functions", path: "/functions" },
   { title: "Menu", path: "/menu" },
-  { title: "Contact Us", path: "/contact" },
+  { title: "Contact Us", path: "/contact-us" },
 ]);
 
 const goTo = (path) => {

@@ -153,7 +153,7 @@ const secondColItems = appStore.isMobile
 const thirdColItems = [
   {
     title: "Contact Us",
-    path: "/contact",
+    path: "/contact-us",
   },
 ];
 </script>
