@@ -13,7 +13,7 @@
       Cafe Latte a truly memorable and humbly elevated culinary escapade.
     </p>
     <button
-      class="py-4 bg-black rounded transition-all flex w-full transition-transform max-w-[500px] hover:scale-[1.1]"
+      class="py-4 bg-black rounded  flex w-full transition-transform max-w-[500px] hover:scale-[1.1]"
       @click="downloadPdf()"
     >
       <p class="text-white text-center text-xl w-full">Download Pdf</p>
@@ -128,7 +128,7 @@ onBeforeMount(async () => {
   if (!contentfulStore.menu.items.length) {
     loading.value = true;
     await contentfulStore.getMenuItems();
-    await contentfulStore.downloadPdf();
+    await contentfulStore.getPdf();
   }
   menuItems.value = contentfulStore.menu.items;
   loading.value = false;

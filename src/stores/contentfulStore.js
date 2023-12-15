@@ -22,7 +22,8 @@ export const useContentfulStore = defineStore({
     functions:{
       text: '',
       gallery: [],
-      loaded: false,
+      services: [],
+      loaded: false
     },
     menu: {
       items: [],
@@ -72,11 +73,13 @@ export const useContentfulStore = defineStore({
         }
     
         let functionsText = response?.items.find((item) => item.fields.title == 'Functions Text').fields.paragraph
+        let functionsServices = response?.items.find((item) => item.fields.title == 'Functions Services').fields.services
         let functionsGallery = response?.items.find((item) => item.fields.title == 'Functions Gallery').fields.galleryImage.map((item) => utils.getImageUrl(item))
   
         this.$patch((state) => {
           state.functions.text = functionsText;
           state.functions.gallery = functionsGallery;
+          state.functions.services = functionsServices;
           state.functions.loaded = true;
         });
       })
@@ -88,21 +91,21 @@ export const useContentfulStore = defineStore({
 
     },
 
-   async downloadPdf(){
+   async getPdf(){
       await client
-      .getEntry({
-        content_type: "menuPdf",
+      .getEntries({
+        content_type: "menuPdf", 
       })
       .then((response) => {
         if(!response){
           throw new Error({message: "Couldn't get menu pdf"})
         }
       
-     
+         console.log(response, 'menu response')
      
         //patch state
         this.$patch((state) => {
-          state.menu.pdf = response.fields.pdf.fields.file.url;
+          state.menu.pdf = response.items[0].fields.pdf.fields.file.url;
          
         });
 
@@ -157,7 +160,6 @@ export const useContentfulStore = defineStore({
             order: item.fields.order,
             filter: item.fields.filter.map(item => item.toLowerCase()),
           })).sort((a,b) => a.order - b.order);
-          console.log(response, "menu items");
         })
         .catch((error) => {
           console.log("Error:", error);

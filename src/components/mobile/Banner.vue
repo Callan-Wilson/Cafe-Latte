@@ -16,7 +16,7 @@
         <div class="flex flex-col items-center w-full mb-4">
           <button
             class="py-4 rounded transition-all flex !bg-white w-4/5 mb-4"
-            @click="goTo()"
+            @click="goToBooking()"
           >
             <p class="text-xl pridi text-center w-full text-black">Book Now</p>
           </button>
@@ -27,10 +27,6 @@
             <p class="text-white text-center text-xl w-full">
               Explore our Menu
             </p>
-            <!-- <img
-                    class="h-[30px] text-white font-normal"
-                    src="../../assets/CaretRight.png"
-                  /> -->
           </button>
         </div>
       </div>
@@ -44,8 +40,15 @@
 </template>
 
 <script setup>
+import {useRouter} from 'vue-router';
+
+const router = useRouter();
 const goTo = () => {
   router.push("/menu");
+};
+
+const goToBooking = () => {
+  window.open("https://www.quandoo.com.au/place/cafe-latte-93684", "_blank");
 };
 </script>
 

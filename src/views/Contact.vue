@@ -9,81 +9,232 @@
       offerings, our contact page is your gateway to reaching us – a seamless
       blend of professionalism and warmth, just like our signature beverages.
     </p>
-    <div v-if="!appStore.isMobile" class="contact-form px-12">
-      <div class="input-row my-20">
-        <div class="input-group">
-          <input type="text" class="input" placeholder="First Name" />
+    <div v-if="!submitted && !loading" class="flex flex-col items-center">
+      <div
+        :class="[
+          showError
+            ? 'error-enter'
+            : !showError && errorMessage
+            ? 'error-exit'
+            : 'opacity-0',
+        ]"
+        class="bg-red-500 z-10 rounded px-4 py-2 flex items-center 'opacity-0'"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="white"
+          class="w-6 h-6 white-text"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <p class="text-lg pridi text-white ml-2">{{ errorMessage }}</p>
+      </div>
+      <div v-if="!appStore.isMobile" class="contact-form px-12">
+        <div class="input-row mt-10">
+          <div class="input-group">
+            <input
+              v-model="form.firstName"
+              type="text"
+              class="input"
+              placeholder="First Name"
+            />
+          </div>
+          <div class="input-group">
+            <input
+              v-model="form.lastName"
+              type="text"
+              class="input"
+              placeholder="Last Name"
+            />
+          </div>
         </div>
-        <div class="input-group">
-          <input type="text" class="input" placeholder="Last Name" />
+        <div class="input-row my-20">
+          <div class="input-group">
+            <input
+              v-model="form.email"
+              type="email"
+              class="input"
+              placeholder="Email"
+            />
+          </div>
+          <div class="input-group">
+            <input
+              v-model="form.mobile"
+              type="tel"
+              class="input"
+              placeholder="Phone Number"
+            />
+          </div>
+        </div>
+        <div class="input-row mt-20 mb-10">
+          <div class="input-group !w-[90%]">
+            <textarea
+              v-model="form.message"
+              class="textarea"
+              placeholder="Message"
+            ></textarea>
+          </div>
         </div>
       </div>
-      <div class="input-row my-20">
-        <div class="input-group">
-          <input type="email" class="input" placeholder="Email" />
+      <div v-else class="px-6 w-screen">
+        <div class="input-row mb-6">
+          <input
+            v-model="form.firstName"
+            type="text"
+            class="input"
+            placeholder="First Name"
+          />
         </div>
-        <div class="input-group">
-          <input type="tel" class="input" placeholder="Phone Number" />
+        <div class="input-row mb-6">
+          <input
+            v-model="form.lastName"
+            type="text"
+            class="input"
+            placeholder="Last Name"
+          />
+        </div>
+        <div class="input-row mb-6">
+          <input
+            v-model="form.email"
+            type="email"
+            class="input"
+            placeholder="Email"
+          />
+        </div>
+        <div class="input-row mb-6">
+          <input
+            v-model="form.mobile"
+            type="tel"
+            class="input"
+            placeholder="Phone Number"
+          />
+        </div>
+        <div class="input-row mb-6 mt-8">
+          <textarea
+            v-model="form.message"
+            class="textarea"
+            placeholder="Message"
+          ></textarea>
         </div>
       </div>
-      <div class="input-row mt-20 mb-10">
-        <div class="input-group !w-[90%]">
-          <textarea class="textarea" placeholder="Message"></textarea>
-        </div>
-      </div>
+      <button @click="sendEmail" class="py-4 px-14 mb-10 rounded bg-black">
+        <p class="text-white text-xl">Send</p>
+      </button>
     </div>
-    <div v-else class="px-6 w-full">
-      <div class="input-row mb-6">
-        <input type="text" class="input" placeholder="First Name" />
-      </div>
-      <div class="input-row mb-6">
-        <input type="text" class="input" placeholder="Last Name" />
-      </div>
+    <Spinner v-if="loading" class="h-[50vh]" />
+    <div
+      v-if="submitted"
+      class="text-green-700 error-enter bg-green-100 rounded-lg flex flex-col items-center text-center mx-4 px-2 lg:px-8 py-10 pridi my-10"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="w-20 h-20"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
 
-      <div class="input-row mb-6">
-        <input type="email" class="input" placeholder="Email" />
-      </div>
-      <div class="input-row mb-6">
-        <input type="tel" class="input" placeholder="Phone Number" />
-      </div>
-
-      <div class="input-row mb-6 mt-8">
-        <textarea class="textarea" placeholder="Message"></textarea>
-      </div>
+      <!-- <p class="text-4xl">Success!</p> -->
+      <p class="text-2xl mt-4">Thanks for sending a message</p>
+      <p class="text-xl mt-4">
+        We will get back to you shortly via email or text
+      </p>
     </div>
-    <button @click="sendEmail" class="py-4 px-14 mb-10 rounded bg-black">
-      <p class="text-white text-xl">Send</p>
-    </button>
   </div>
 </template>
-
 <script setup>
 import { useAppStore } from "../stores/appStore.js";
+import { onMounted, ref } from "vue";
+import Spinner from "@/components/Spinner.vue";
 
 const appStore = useAppStore();
 
-//import emailjs from "emailjs-com";
+import emailjs from "emailjs-com";
+
+const form = ref({
+  firstName: "",
+  lastName: "",
+  email: "",
+  mobile: "",
+  message: "",
+});
 
 // Replace with your Email.js user ID
-// const emailjsUserId = "user_your_emailjs_user_id";
-// const serviceID = 'default_service'; // Replace with your service ID
-// const templateID = 'template_default'; // Replace with your template ID
+const serviceID = "service_8e1u4xg"; // Replace with your service ID
+const templateID = "template_rgt0b6v"; // Replace with your template ID
+const userId = "gokcdYaHRlxoz_LkJ";
 
-// // const sendEmail = async () => {
-// const templateParams = {
-//   to_email: 'recipient@example.com',
-//   subject: 'Hello',
-//   message: 'This is the body of the email.'
-// };
-// const userID = 'user_your_emailjs_user_id'; // Replace with your user ID
+const loading = ref(false);
+const submitted = ref(false);
+const errorMessage = ref(false);
+const showError = ref(false);
 
-// try {
-//   const response = await emailjs.send(serviceID, templateID, templateParams, userID);
-//   console.log('Email sent successfully:', response);
-// } catch (error) {
-//   console.error('Error sending email:', error);
-// }
-// };
+const handleError = (message) => {
+  errorMessage.value = message;
+
+  showError.value = true;
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  return false;
+};
+const validate = () => {
+  setTimeout(() => {
+    showError.value = false;
+  }, 1500);
+
+  const { firstName, lastName, email, mobile, message } = form.value;
+  if (!firstName?.length && !lastName.length)
+    return handleError("Please provide a name");
+  if (!email?.length && !mobile.length)
+    return handleError("Please provide a mobile or email");
+  if (!message.length) return handleError("Please provide a message");
+
+  return true;
+};
+
+const sendEmail = async () => {
+  if (!validate()) return;
+  const templateParams = {
+    ...form.value,
+    to_email: "cafelattehawksburn@gmail.com",
+    subject: `${form.firstName} ${form.lastName} has sent a message`,
+  };
+
+  try {
+    await window.scrollTo({ top: 0, behavior: "smooth" });
+    loading.value = true;
+    const response = await emailjs.send(
+      serviceID,
+      templateID,
+      templateParams,
+      userId
+    );
+    if (response) {
+      loading.value = false;
+      submitted.value = true;
+    }
+  } catch (error) {
+    loading.value = false;
+    setTimeout(() => {
+      showError.value = false;
+    }, 1500);
+    errorMessage.value = "Sorry something went wrong";
+    showError.value = true;
+  }
+};
 </script>
 
 <style scoped>
@@ -129,5 +280,33 @@ textarea::placeholder {
   height: 200px;
   resize: none;
   outline: none;
+}
+
+.error-exit {
+  animation: slideFadeDown 0.3s ease-in-out forwards;
+}
+.error-enter {
+  animation: slideFadeUp 0.3s ease-in-out forwards;
+}
+
+@keyframes slideFadeDown {
+  from {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes slideFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
 </style>
