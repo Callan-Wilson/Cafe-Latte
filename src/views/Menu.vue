@@ -1,5 +1,5 @@
 <template>
-  <div class="m-auto px-4 pt-8 flex flex-col items-center">
+  <div class="m-auto  pt-8 flex flex-col items-center">
     <h1 class="text-4xl pridi bold">Menu</h1>
     <p
       class="lg:px-0 text-center pridi my-6 max-w-[1000px] leading-loose text-md"
@@ -13,7 +13,7 @@
       Cafe Latte a truly memorable and humbly elevated culinary escapade.
     </p>
     <button
-      class="py-4 bg-black rounded  flex w-full transition-transform max-w-[500px] hover:scale-[1.1]"
+      class="py-4 bg-black rounded  flex w-[80%] lg:w-full transition-transform mx-4 lg:max-w-[500px] lg:hover:scale-[1.1] "
       @click="downloadPdf()"
     >
       <p class="text-white text-center text-xl w-full">Download Pdf</p>
@@ -23,9 +23,9 @@
                   /> -->
     </button>
     <div
-      class="flex flex-col lg:flex-row w-full justify-center relative pt-8 md:px-6"
+      class="flex flex-col lg:flex-row w-full justify-center relative pt-8 md:px-6 z-10"
     >
-      <div class="lg:hidden overflow-scroll flex">
+      <div class="lg:hidden overflow-scroll flex pl-4 z-10">
         <p
           v-for="(option, index) in menuFilters"
           :key="option"
@@ -40,7 +40,7 @@
           ></span>
         </p>
       </div>
-      <div class="menu-options pr-6 mr-6 hidden lg:flex flex-col">
+      <div class="menu-options pr-6 mr-6 hidden lg:flex flex-col z-10">
         <p
           v-for="option in menuFilters"
           :key="option"
@@ -54,8 +54,8 @@
           ></span>
         </p>
       </div>
-      <div v-if="!loading" class="flex justify-center w-full">
-        <div class="menu-items w-full lg:px-4 pb-4">
+      <div v-if="!loading" class="flex justify-center w-full px-4 lg:px-0">
+        <div class="menu-items  lg:max-w-[1600px] lg:px-4 pb-4">
           <menuCard
             v-for="(item, index) in filteredMenuItems"
             :key="index"
@@ -139,15 +139,15 @@ onBeforeMount(async () => {
 .menu-options {
   border-right: 2px solid rgb(59, 59, 59);
   min-width: fit-content;
-  display: absolute;
-  left: 0px;
+  position: absolute;
+  left: 20px;
   height: fit-content;
 }
 
 .menu-items {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 30px; /* Gap between grid items */
+  gap: 25px;
   overflow-y: scroll;
 }
 @media (min-width: 768px) {
@@ -156,12 +156,16 @@ onBeforeMount(async () => {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .menu-items {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
-@media (min-width: 1500px) {
+@media (min-width: 1800px) {
+
+  .menu-options{
+    left: 50px;
+  }
   .menu-items {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }

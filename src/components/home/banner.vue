@@ -44,7 +44,10 @@
 </template>
 
 <script setup>
+import {useRouter} from 'vue-router'
 import banner from "../../assets/banner.jpg";
+
+const router = useRouter();
 const goTo = () => {
   router.push("/menu");
 };

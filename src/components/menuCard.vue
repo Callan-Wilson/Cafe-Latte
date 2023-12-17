@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full md:h-[450px] h-full flex rounded flex-col bg-white shadow-lg w-full pb-2"
+    class="w-full md:h-[450px] h-full flex rounded flex-col bg-white shadow-lg card-width lg:max-w-[35vw] xl:max-w-[25vw] pb-2"
   >
     <img
       :src="menuItem.image"
@@ -73,4 +73,11 @@ const props = defineProps({
 .dietary-requirement {
   font-size: 12px;
 }
+
+/* @media (min-width: 1200px) {
+
+.card-width{
+  width: 20vw;
+}
+} */
 </style>

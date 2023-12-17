@@ -8,54 +8,35 @@
       <p class="text-center max-w-[900px] text-lg mb-10 px-4">
         {{ text }}
       </p>
-      <h2 class="text-2xl mb-6">Services</h2>
-      <div v-if="!app.isMobile" class="flex w-full max-w-[1000px]">
-        <div class="px-8 w-1/2">
-          <div
-            v-for="service in services1"
-            :key="service"
-            class="flex flex-col justify-center items-center mb-4"
-          >
-            <!-- <div class="rounded-full bg-black p-1 mr-4"></div> -->
-            <p class="text-center mb-4">{{ service }}</p>
-            <span
-              class="mb-6"
-              style="background-color: #333333; height: 1px; width: 30%"
-            ></span>
-          </div>
-        </div>
-        <div class="px-8 w-1/2">
-          <div
-            v-for="service in services2"
-            :key="service"
-            class="flex flex-col justify-center items-center mb-4"
-          >
-            <!-- <div class="rounded-full bg-black p-1 mr-4"></div> -->
-            <p class="text-center mb-4">{{ service }}</p>
-            <span
-              class="mb-6"
-              style="background-color: #333333; height: 1px; width: 30%"
-            ></span>
-          </div>
-        </div>
-      </div>
-      <div v-else class="flex flex-col justify-center items-center">
-        <div
-          v-for="service in apiStore?.functions?.services"
-          :key="service"
-          class="flex flex-col justify-center items-center mb-4 px-6"
-        >
-          <!-- <div class="rounded-full bg-black p-1 mr-4"></div> -->
-          <p class="text-center mb-4">{{ service }}</p>
-          <span
-            class="mb-6"
-            style="background-color: #333333; height: 1px; width: 30%"
-          ></span>
-        </div>
-      </div>
-      <button class="py-4 px-14 rounded bg-black mt-10 mb-8" @click="goTo()">
+      <!-- <h2 class="text-3xl my-6">Services</h2>
+      <div
+      class="mb-8"
+      style="background-color: #333333; height: 1px; width: 20%"
+    ></div> -->
+    <button class="py-4 px-14 rounded bg-black  mb-10" @click="goTo()">
         <p class="text-white text-xl">Book in a function today!</p>
       </button>
+      <div v-if="!app.isMobile" class="flex flex-wrap justify-center w-full mt-4 mb-8 max-w-[1200px]">
+
+          <ServiceCard
+          v-for="service, index in apiStore?.functions?.services"
+          :data="service"
+          :class="{'mx-8': [1,4].includes(index)}"
+          class="flex flex-col   mb-4 w-[332px] h-[350px]"
+        />
+       
+      </div>
+      <div v-else class="flex flex-col justify-center items-center mb-8">
+
+        <ServiceCard
+          v-for="service in apiStore?.functions?.services"
+          :data="service"
+          class="flex flex-col  mb-4 px-6"
+        />
+      </div>
+      <!-- <button class="py-4 px-14 rounded bg-black mt-10 mb-8" @click="goTo()">
+        <p class="text-white text-xl">Book in a function today!</p>
+      </button> -->
     </template>
   </div>
 </template>
@@ -67,6 +48,7 @@ import { useContentfulStore } from "../stores/contentfulStore.js";
 import { useAppStore } from "../stores/appStore.js";
 import Spinner from "@/components/Spinner.vue";
 import Slideshow from "@/components/functions/Slideshow.vue";
+import ServiceCard from "@/components/functions/ServiceCard.vue";
 
 const router = useRouter();
 
@@ -102,5 +84,7 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-
+object svg{
+color: rgb(45, 86, 201) !important;
+}
 </style>

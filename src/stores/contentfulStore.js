@@ -73,8 +73,10 @@ export const useContentfulStore = defineStore({
         }
     
         let functionsText = response?.items.find((item) => item.fields.title == 'Functions Text').fields.paragraph
-        let functionsServices = response?.items.find((item) => item.fields.title == 'Functions Services').fields.services
+        let functionsServices = response?.items.filter((item) => item.fields.title.toLowerCase().includes('card')).map(item => ({text:item.fields.cardText , icon:item.fields.cardIcon.fields.file.url}))
         let functionsGallery = response?.items.find((item) => item.fields.title == 'Functions Gallery').fields.galleryImage.map((item) => utils.getImageUrl(item))
+
+        console.log(functionsServices, 'service cards');
   
         this.$patch((state) => {
           state.functions.text = functionsText;

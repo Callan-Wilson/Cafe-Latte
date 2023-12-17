@@ -1,11 +1,11 @@
 <template>
-    <div class="flex justify-center w-full h-auto">
-        <div class="relative w-full h-[300px] lg:w-[1000px] lg:h-[500px] lg:mb-10 overflow-hidden">
+    <div class="flex justify-center w-full h-auto ">
+        <div class="relative w-full h-[300px] lg:w-[1000px] lg:h-[500px] lg:mb-10 lg:rounded  overflow-hidden">
           <div
             v-for="picture, index in gallery"
             :key="picture"
             :class="animatePicture(picture, index)"
-            class=" rounded  flex justify-center items-center  absolute top-0"
+            class=" flex justify-center items-center  absolute top-0"
           >
             <img class="object-cover scale-effect " :src="picture" />
           </div>
