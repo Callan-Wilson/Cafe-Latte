@@ -8,10 +8,10 @@
         <p class="lg:hidden text-xl text-center mb-12 lg-mb-0">
           6am - 3pm, Monday - Sunday
         </p>
-        <h1 class="text-4xl hidden lg:block text-center mb-10 underline">
+        <h1 class="text-4xl hidden lg:block text-center mb-12 lg:mb-8 underline">
           {{ location.heading }}
         </h1>
-        <p class="hidden lg:block text-xl text-center px-4 mb-10">
+        <p class="hidden lg:block text-xl text-center md:px-12 mb-10">
           {{ location.text }}
         </p>
         <p class="text-2xl text-center underline mb-4">Address</p>
