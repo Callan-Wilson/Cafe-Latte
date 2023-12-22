@@ -2,10 +2,11 @@
   <div class="banner">
     <div class="overlay flex justify-center items-center">
       <div
-        class="overlay-content pridi flex flex-col justify-center items-center px-10 rounded-lg"
+        class="overlay-content-container pridi flex flex-col justify-center items-center px-10 rounded-lg"
       >
+      <div class="overlay-bg"></div>
         <img
-          class="banner-logo  my-4"
+          class="banner-logo my-4"
           src="../../assets/cafeLatteLogoRound.png"
           alt="logo"
         />
@@ -15,7 +16,7 @@
         </p>
         <div class="flex justify-around w-full mb-8">
           <button
-            class="py-4 rounded transition-all flex w-[200px]"
+            class="py-4 rounded transition-all flex w-[200px] bg-black"
             @click="goTo()"
           >
             <p class="text-white text-center text-xl w-full">
@@ -44,7 +45,7 @@
 </template>
 
 <script setup>
-import {useRouter} from 'vue-router'
+import { useRouter } from "vue-router";
 import banner from "../../assets/banner.jpg";
 
 const router = useRouter();
@@ -82,12 +83,21 @@ const goToBooking = () => {
   z-index: 2;
 }
 
-.overlay-content {
-  // background: rgba(255,255,255, 0.3);
-  background: rgba(23, 24, 23, 0.3);
+.overlay-content-container {
   width: max-content;
   height: max-content;
+}
+.overlay-bg {
+  // background: rgba(255,255,255, 0.3);
+  background: rgba(23, 24, 23, 0.3);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
   backdrop-filter: blur(3px);
+  border-radius: 5px
 }
 
 .overlay-content button {
@@ -107,10 +117,10 @@ const goToBooking = () => {
   width: 400px;
 }
 
-@media(max-height: 750px){
-  .banner-logo{
-    height: 300px;
-    width: 300px;
+@media (max-height: 800px) {
+  .banner-logo {
+    height: 320px;
+    width: 320px;
   }
 }
 </style>

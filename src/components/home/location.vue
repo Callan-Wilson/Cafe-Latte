@@ -2,6 +2,12 @@
   <div class="w-full flex flex-col pb-8 lg:pb-0 lg:flex-row">
     <div class="w-full lg:w-1/2 pridi p-4">
       <template v-if="loaded">
+        <p class="lg:hidden text-2xl text-center underline my-4 lg:mt-10">
+          Opening Times
+        </p>
+        <p class="lg:hidden text-xl text-center mb-12 lg-mb-0">
+          6am - 3pm, Monday - Sunday
+        </p>
         <h1 class="text-4xl hidden lg:block text-center mb-10 underline">
           {{ location.heading }}
         </h1>
@@ -59,11 +65,11 @@
           ></iframe>
         </div>
 
-        <p class="text-2xl text-center underline my-4 lg:mt-10">
+        <p class="hidden lg:block text-2xl text-center underline my-4 lg:mt-10">
           Opening Times
         </p>
-        <p class="text-xl text-center mb-4 lg-mb-0">
-          Open: 6am - 3pm, Monday - Sunday
+        <p class="hidden lg:block text-xl text-center mb-4 lg-mb-0">
+         6am - 3pm, Monday - Sunday
         </p>
       </template>
       <Spinner v-else />
