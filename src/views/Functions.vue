@@ -21,8 +21,8 @@
           <ServiceCard
           v-for="service, index in apiStore?.functions?.services"
           :data="service"
-          :class="{'mx-8': [1,4].includes(index)}"
-          class="flex flex-col   mb-4 w-[332px] h-[350px]"
+          :class="{'lg:!mx-8': [1,4].includes(index)}"
+          class="flex flex-col md:mx-8 lg:mx-0  mb-4 w-[332px] h-[350px]"
         />
        
       </div>
@@ -49,6 +49,7 @@ import { useAppStore } from "../stores/appStore.js";
 import Spinner from "@/components/Spinner.vue";
 import Slideshow from "@/components/functions/Slideshow.vue";
 import ServiceCard from "@/components/functions/ServiceCard.vue";
+import { useHead } from "@unhead/vue";
 
 const router = useRouter();
 
@@ -62,8 +63,8 @@ const goTo = () => {
 
 let { text, gallery, loaded } = toRefs(apiStore.functions);
 
-const services1 = ref([]);
-const services2 = ref([]);
+// const services1 = ref([]);
+// const services2 = ref([]);
 
 
 
@@ -72,14 +73,23 @@ onMounted(async () => {
     await apiStore.getFunctionsContent();
   }
 
-  services1.value = apiStore.functions.services.slice(0, apiStore.functions.services.length / 2);
-  services2.value = apiStore.functions.services.slice(apiStore.functions.services.length / 2, apiStore.functions.services.length );
+  // services1.value = apiStore.functions.services.slice(0, apiStore.functions.services.length / 2);
+  // services2.value = apiStore.functions.services.slice(apiStore.functions.services.length / 2, apiStore.functions.services.length );
 
  
 });
 
 
-
+useHead({
+  title: "Cafe Latte Functions",
+  description:
+    "Nestled charmingly within Hawksburn, Melbourne, Cafe Latte warmly invites you to embark on a delightful journey of flavors. Our unassuming yet inviting space is where food enthusiasts gather to enjoy a menu crafted with care, incorporating a tasteful selection of exotic ingredients.",
+  charset: "UTF-8",
+  "og:title": "Cafe Latte Menu",
+  "og:description":  "Nestled charmingly within Hawksburn, Melbourne, Cafe Latte warmly invites you to embark on a delightful journey of flavors. Our unassuming yet inviting space is where food enthusiasts gather to enjoy a menu crafted with care, incorporating a tasteful selection of exotic ingredients.",
+  "og:image": "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
+  "og:url": "https://cafelattehawksburn.com/menu",
+});
 
 </script>
 

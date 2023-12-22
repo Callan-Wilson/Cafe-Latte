@@ -136,7 +136,7 @@ const secondColItems = appStore.isMobile
       },
       {
         title: "Contact Us",
-        path: "/contact",
+        path: "/contact-us",
       },
     ]
   : [

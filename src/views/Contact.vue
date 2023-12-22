@@ -234,6 +234,17 @@ const sendEmail = async () => {
     errorMessage.value = "Sorry something went wrong";
     showError.value = true;
   }
+
+  useHead({
+  title: "Cafe Latte Contact",
+  description:
+    "Connect with Cafe Latte, nestled in the heart of Hawksburn, Melbourne. Reach out to us for inquiries about our exceptional coffee, delightful breakfast and lunch options, and our versatile event space perfect for hosting functions. We look forward to welcoming you to our inviting haven of flavors and hospitality.",
+  charset: "UTF-8",
+  "og:title": "Cafe Latte Menu",
+  "og:description":  "Connect with Cafe Latte, nestled in the heart of Hawksburn, Melbourne. Reach out to us for inquiries about our exceptional coffee, delightful breakfast and lunch options, and our versatile event space perfect for hosting functions. We look forward to welcoming you to our inviting haven of flavors and hospitality.",
+  "og:image": "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
+  "og:url": "https://cafelattehawksburn.com/menu",
+});
 };
 </script>
 

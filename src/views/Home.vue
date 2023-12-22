@@ -13,6 +13,7 @@ import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useContentfulStore } from "../stores/contentfulStore.js";
 import { useAppStore } from "../stores/appStore.js";
+import { useHead } from "@unhead/vue";
 
 // mobile
 import MobileBanner from "@/components/mobile/Banner.vue";
@@ -30,6 +31,17 @@ const appStore = useAppStore();
 
 onMounted(async () => {
   await apiStore.loadHomeContent();
+});
+
+useHead({
+  title: "Cafe Latte",
+  description:
+    "Indulge in the rich flavors of Cafe Latte, where passion meets perfection in every cup of coffee and every dish served. Experience the vibrant essence of our cozy cafe, where the aroma of freshly brewed coffee and the tantalizing taste of exquisite cuisine come together to create an unforgettable experience.",
+  charset: "UTF-8",
+  "og:title": "Cafe Latte",
+  "og:description":  "Indulge in the rich flavors of Cafe Latte, where passion meets perfection in every cup of coffee and every dish served. Experience the vibrant essence of our cozy cafe, where the aroma of freshly brewed coffee and the tantalizing taste of exquisite cuisine come together to create an unforgettable experience.",
+  "og:image": "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
+  "og:url": "https://cafelattehawksburn.com",
 });
 </script>
 

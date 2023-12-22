@@ -81,6 +81,7 @@ import { ref, onBeforeMount, computed } from "vue";
 import { useContentfulStore } from "../stores/contentfulStore";
 import menuCard from "@/components/menuCard.vue";
 import Spinner from "@/components/Spinner.vue";
+import { useHead } from "@unhead/vue";
 
 const contentfulStore = useContentfulStore();
 
@@ -123,6 +124,16 @@ const setFilter = (option) => {
     changing.value = false;
   }, 300);
 };
+useHead({
+  title: "Cafe Latte Menu",
+  description:
+    "Nestled charmingly within Hawksburn, Melbourne, Cafe Latte warmly invites you to embark on a delightful journey of flavors. Our unassuming yet inviting space is where food enthusiasts gather to enjoy a menu crafted with care, incorporating a tasteful selection of exotic ingredients.",
+  charset: "UTF-8",
+  "og:title": "Cafe Latte Menu",
+  "og:description":  "Nestled charmingly within Hawksburn, Melbourne, Cafe Latte warmly invites you to embark on a delightful journey of flavors. Our unassuming yet inviting space is where food enthusiasts gather to enjoy a menu crafted with care, incorporating a tasteful selection of exotic ingredients.",
+  "og:image": "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
+  "og:url": "https://cafelattehawksburn.com/menu",
+});
 
 onBeforeMount(async () => {
   if (!contentfulStore.menu.items.length) {
@@ -165,10 +176,12 @@ onBeforeMount(async () => {
 
   .menu-options{
     left: 50px;
+    border-right: 0px;
   }
   .menu-items {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
+
 }
 
 // .menu-container {
