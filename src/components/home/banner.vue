@@ -5,7 +5,7 @@
         class="overlay-content pridi flex flex-col justify-center items-center px-10 rounded-lg"
       >
         <img
-          class="banner-logo my-4"
+          class="banner-logo  my-4"
           src="../../assets/cafeLatteLogoRound.png"
           alt="logo"
         />
@@ -105,5 +105,12 @@ const goToBooking = () => {
 .banner-logo {
   height: 400px;
   width: 400px;
+}
+
+@media(max-height: 750px){
+  .banner-logo{
+    height: 300px;
+    width: 300px;
+  }
 }
 </style>

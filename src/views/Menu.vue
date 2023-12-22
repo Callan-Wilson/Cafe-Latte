@@ -23,24 +23,29 @@
                   /> -->
     </button>
     <div
-      class="flex flex-col lg:flex-row w-full justify-center relative pt-8 md:px-6 z-10"
+      class="flex flex-col  w-full justify-center lg:items-center relative pt-8 md:px-6 z-10"
     >
-      <div class="lg:hidden overflow-scroll flex pl-4 z-10">
+      <div class="md:my-6 overflow-scroll flex pl-4 z-10">
         <p
           v-for="(option, index) in menuFilters"
           :key="option"
           @click="setFilter(option)"
-          class="mb-4 mx-2 w-min whitespace-nowrap text-lg pridi cursor-pointer relative inline-block"
+          :class= "[index !== menuFilters.length - 1 ? 'border-r-2 border-slate-500' : 'border-none']"
+          class="hover-parent mb-4 mx-2 pr-4 w-min whitespace-nowrap text-lg md:text-xl pridi cursor-pointer relative inline-block"
         >
           {{ option }}
           <span
-            v-if="index !== menuFilters.length - 1"
             :class="{ 'active-hover-line': filter === option.toLowerCase() }"
-            class="border ml-4 border-left border-slate-500 bg-slate-300"
+            class="hover-line"
           ></span>
         </p>
       </div>
-      <div class="menu-options pr-6 mr-6 hidden lg:flex flex-col z-10">
+      <!-- <span
+        v-if="index !== menuFilters.length - 1"
+        :class="{ 'active-hover-line': filter === option.toLowerCase() }"
+        class="border ml-4 border-left border-slate-500 bg-slate-300"
+      ></span> -->
+      <!-- <div class="menu-options pr-6 mr-6 hidden lg:flex flex-col z-10">
         <p
           v-for="option in menuFilters"
           :key="option"
@@ -53,7 +58,7 @@
             class="hover-line"
           ></span>
         </p>
-      </div>
+      </div> -->
       <div v-if="!loading" class="flex justify-center w-full px-4 lg:px-0">
         <div class="menu-items  lg:max-w-[1600px] lg:px-4 pb-4">
           <menuCard
@@ -148,7 +153,7 @@ onBeforeMount(async () => {
 
 <style lang="scss" scoped>
 .menu-options {
-  border-right: 2px solid rgb(59, 59, 59);
+ // border-right: 2px solid rgb(59, 59, 59);
   min-width: fit-content;
   position: absolute;
   left: 20px;
@@ -199,12 +204,12 @@ onBeforeMount(async () => {
   transition: width 0.3s ease;
 }
 
-.menu-options p:hover .hover-line {
-  width: calc(100% + 10px);
+.hover-parent:hover span {
+  width: calc(100% - 15px);
 }
 
 .active-hover-line {
-  width: calc(100% + 10px);
+  width: calc(100% - 15px);
 }
 
 //  .menu-card-animation-leave-active {

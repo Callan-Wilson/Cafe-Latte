@@ -9,8 +9,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { useRouter } from "vue-router";
+import { onMounted} from "vue";
 import { useContentfulStore } from "../stores/contentfulStore.js";
 import { useAppStore } from "../stores/appStore.js";
 import { useHead } from "@unhead/vue";
@@ -24,7 +23,6 @@ import Events from "@/components/home/events.vue";
 import Gallery from "@/components/home/gallery.vue";
 import Location from "@/components/home/location.vue";
 
-const router = useRouter();
 
 const apiStore = useContentfulStore();
 const appStore = useAppStore();
