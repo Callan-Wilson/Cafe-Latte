@@ -16,13 +16,13 @@
           <h2 class="text-xl lg:text-3xl pridi my-4">
             {{ events.subheading }}
           </h2>
-          <p class="pridi text-left w-full px-8 lg:px-1 lg:text-xl lg:w-4/5+">
+          <p class="pridi text-center md:text-left w-full px-8 lg:px-1 lg:text-xl lg:w-4/5+">
             {{ events.text }}
           </p>
         </div>
       </div>
       <div
-        class="flex overflow-hidden items-center justify-center w-full h-[200px] px-4 lg:h-full"
+        class="events-image flex overflow-hidden items-center justify-center w-full px-4 lg:h-full"
       >
         <img
           class="object-cover object-top lg:object-center rounded-lg w-full lg:w-auto h-full lg:h-4/5"
@@ -52,4 +52,19 @@ const appStore = useAppStore();
 let { events, loaded } = toRefs(store.home);
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.events-image{
+  height: 300px;
+}
+
+@media(min-width: 550px){
+  .events-image{
+    height: 400px;
+  }
+}
+@media(min-width: 1024px){
+  .events-image{
+    height: 100%;
+  }
+}
+</style>

@@ -15,6 +15,7 @@ export const useAppStore = defineStore({
     isMobile: function () {
       return window.innerWidth < breakpoints.mobile;
     },
+    
     isTablet: function () {
       return (
         window.innerWidth >= breakpoints.tablet &&
