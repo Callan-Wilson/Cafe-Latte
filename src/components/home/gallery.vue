@@ -14,15 +14,19 @@
         <swiper
           class="w-full h-[250px] lg:h-[250px]"
           :loop="true"
+          :freeMode="!app.isMobile"
+          :grab-cursor="true"
           :slides-per-view="app.isMobile ? 1 : 'auto'"
-          :autoplay="{ delay: 3000 }"
+          :autoplay="{ delay: !app.isMobile ? 1 : 4000 }"
           :centered-slides="app.isMobile"
           :modules="[Autoplay]"
+          :speed="!app.isMobile ? 10000 : 500"
+          :free-mode-momentum="app.isMobile"
         >
           <swiper-slide
             v-for="(post, index) in gallery"
             @click="redirectToInsta(post.url)"
-            class="h-full w-full md:max-w-[350px] md:mr-8 rounded lg:overflow-hidden"
+            class="h-full w-full md:max-w-[350px] md:mr-8 rounded lg:overflow-hidden transition-all"
           >
             <img
               :key="index"
@@ -82,5 +86,10 @@ const redirectToInsta = (url) => {
   .swiper-wrapper {
     transition-timing-function: linear;
   }
+}
+.swiper-wrapper {
+  -webkit-transition-timing-function: linear !important;
+  -o-transition-timing-function: linear !important;
+  transition-timing-function: linear !important;
 }
 </style>
