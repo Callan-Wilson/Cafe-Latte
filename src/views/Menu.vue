@@ -1,19 +1,13 @@
 <template>
-  <div class="m-auto  pt-8 flex flex-col items-center">
+  <div class="m-auto pt-8 flex flex-col items-center">
     <h1 class="text-4xl pridi bold">Menu</h1>
     <p
       class="lg:px-0 text-center pridi my-6 max-w-[1000px] leading-loose text-md"
     >
-      Nestled charmingly within Hawksburn, Melbourne, Cafe Latte warmly invites
-      you to embark on a delightful journey of flavors. Our unassuming yet
-      inviting space is where food enthusiasts gather to enjoy a menu crafted
-      with care, incorporating a tasteful selection of exotic ingredients. From
-      dawn's first light to the sun's descent, savor the heartwarming embrace of
-      dishes that marry simplicity with the extraordinary, making each visit to
-      Cafe Latte a truly memorable and humbly elevated culinary escapade.
+      {{ menuText }}
     </p>
     <button
-      class="py-4 bg-black rounded  flex w-[80%] lg:w-full transition-transform mx-4 lg:max-w-[500px] lg:hover:scale-[1.1] "
+      class="py-4 bg-black rounded flex w-[80%] lg:w-full transition-transform mx-4 lg:max-w-[500px] lg:hover:scale-[1.1]"
       @click="downloadPdf()"
     >
       <p class="text-white text-center text-xl w-full">Download Pdf</p>
@@ -23,14 +17,18 @@
                   /> -->
     </button>
     <div
-      class="flex flex-col  w-full justify-center lg:items-center relative pt-8 md:px-6 z-10"
+      class="flex flex-col w-full justify-center lg:items-center relative pt-8 md:px-6 z-10"
     >
       <div class="md:my-6 overflow-scroll flex pl-4 z-10">
         <p
           v-for="(option, index) in menuFilters"
           :key="option"
           @click="setFilter(option)"
-          :class= "[index !== menuFilters.length - 1 ? 'border-r-2 border-slate-500' : 'border-none']"
+          :class="[
+            index !== menuFilters.length - 1
+              ? 'border-r-2 border-slate-500'
+              : 'border-none',
+          ]"
           class="hover-parent mb-4 mx-2 pr-4 w-min whitespace-nowrap text-lg md:text-xl pridi cursor-pointer relative inline-block"
         >
           {{ option }}
@@ -60,7 +58,7 @@
         </p>
       </div> -->
       <div v-if="!loading" class="flex justify-center w-full px-4 lg:px-0">
-        <div class="menu-items  lg:max-w-[1600px] lg:px-4 pb-4">
+        <div class="menu-items lg:max-w-[1600px] lg:px-4 pb-4">
           <menuCard
             v-for="(item, index) in filteredMenuItems"
             :key="index"
@@ -103,6 +101,7 @@ const menuFilters = ref([
 ]);
 const loading = ref(false);
 const menuItems = ref([]);
+const menuText = ref("");
 
 const filter = ref("all");
 const changing = ref(false);
@@ -135,25 +134,28 @@ useHead({
     "Nestled charmingly within Hawksburn, Melbourne, Cafe Latte warmly invites you to embark on a delightful journey of flavors. Our unassuming yet inviting space is where food enthusiasts gather to enjoy a menu crafted with care, incorporating a tasteful selection of exotic ingredients.",
   charset: "UTF-8",
   "og:title": "Cafe Latte Menu",
-  "og:description":  "Nestled charmingly within Hawksburn, Melbourne, Cafe Latte warmly invites you to embark on a delightful journey of flavors. Our unassuming yet inviting space is where food enthusiasts gather to enjoy a menu crafted with care, incorporating a tasteful selection of exotic ingredients.",
-  "og:image": "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
+  "og:description":
+    "Nestled charmingly within Hawksburn, Melbourne, Cafe Latte warmly invites you to embark on a delightful journey of flavors. Our unassuming yet inviting space is where food enthusiasts gather to enjoy a menu crafted with care, incorporating a tasteful selection of exotic ingredients.",
+  "og:image":
+    "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
   "og:url": "https://cafelattehawksburn.com/menu",
 });
 
 onBeforeMount(async () => {
   if (!contentfulStore.menu.items.length) {
     loading.value = true;
-    await contentfulStore.getMenuItems();
+    await contentfulStore.getMenuContent();
     await contentfulStore.getPdf();
   }
   menuItems.value = contentfulStore.menu.items;
+  menuText.value = contentfulStore.menu.text;
   loading.value = false;
 });
 </script>
 
 <style lang="scss" scoped>
 .menu-options {
- // border-right: 2px solid rgb(59, 59, 59);
+  // border-right: 2px solid rgb(59, 59, 59);
   min-width: fit-content;
   position: absolute;
   left: 20px;
@@ -178,15 +180,13 @@ onBeforeMount(async () => {
   }
 }
 @media (min-width: 1800px) {
-
-  .menu-options{
+  .menu-options {
     left: 50px;
     border-right: 0px;
   }
   .menu-items {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-
 }
 
 // .menu-container {

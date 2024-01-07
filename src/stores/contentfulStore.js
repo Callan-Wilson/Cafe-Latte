@@ -26,9 +26,13 @@ export const useContentfulStore = defineStore({
       loaded: false
     },
     menu: {
+      text: '',
       items: [],
       pdf: ''
     },
+    contact:{
+      text: ''
+    }
   }),
 
   actions: {
@@ -102,9 +106,6 @@ export const useContentfulStore = defineStore({
         if(!response){
           throw new Error({message: "Couldn't get menu pdf"})
         }
-      
-         console.log(response, 'menu response')
-     
         //patch state
         this.$patch((state) => {
           state.menu.pdf = response.items[0].fields.pdf.fields.file.url;
@@ -148,6 +149,23 @@ export const useContentfulStore = defineStore({
         console.log("Error:", error);
       });
     },
+    async getMenuContent(){
+
+      await Promise.all([this.getMenuItems(), this.getMenuText()]);
+   
+    },
+    async getMenuText(){
+      await client
+      .getEntries({
+        content_type: "menuText",
+      })
+      .then((response) => {
+        this.menu.text = response.items[0].fields.text
+    })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+    },
     async getMenuItems() {
       await client
         .getEntries({
@@ -167,5 +185,19 @@ export const useContentfulStore = defineStore({
           console.log("Error:", error);
         });
     },
+    async getContactContent(){
+      await client
+      .getEntries({
+        content_type: "contactContent",
+      })
+      .then((response) => {
+        console.log(response, 'res')
+        this.contact.text = response.items[0].fields.text;
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+    }
   },
+
 });

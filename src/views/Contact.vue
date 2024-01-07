@@ -1,13 +1,10 @@
 <template>
   <div class="pt-10 flex flex-col items-center pridi">
     <h1 class="text-4xl mb-8">Get in touch!</h1>
-    <p class="hidden lg:block text-md text-center mb-8 max-w-[900px]">
-      Welcome to Cafe Latte, an exquisite destination nestled in the heart of
-      Melbourne, where elegance meets unparalleled flavor. Our dedicated team
-      awaits the pleasure of assisting you in every possible way. Whether you
-      seek a delightful culinary experience or have inquiries about our
-      offerings, our contact page is your gateway to reaching us – a seamless
-      blend of professionalism and warmth, just like our signature beverages.
+
+    <Spinner v-if="!contactBlurb?.length" class="hidden lg:flex mb-8" />
+    <p v-else class="hidden lg:block text-md text-center mb-8 max-w-[900px]">
+      {{ contactBlurb }}
     </p>
     <div v-if="!submitted && !loading" class="flex flex-col items-center">
       <div
@@ -158,12 +155,16 @@
 </template>
 <script setup>
 import { useAppStore } from "../stores/appStore.js";
+import { useContentfulStore } from "../stores/contentfulStore.js";
 import { onMounted, ref } from "vue";
 import Spinner from "@/components/Spinner.vue";
+import emailjs from "emailjs-com";
+import { useHead } from "@unhead/vue";
 
 const appStore = useAppStore();
+const apiStore = useContentfulStore();
 
-import emailjs from "emailjs-com";
+const contactBlurb = ref("");
 
 const form = ref({
   firstName: "",
@@ -234,18 +235,28 @@ const sendEmail = async () => {
     errorMessage.value = "Sorry something went wrong";
     showError.value = true;
   }
+};
 
-  useHead({
+onMounted(async () => {
+  console.log(apiStore.contact.text, "text");
+  if (!apiStore?.contact?.text?.length) {
+    await apiStore.getContactContent();
+  }
+  contactBlurb.value = apiStore?.contact?.text;
+});
+
+useHead({
   title: "Cafe Latte Contact",
   description:
     "Connect with Cafe Latte, nestled in the heart of Hawksburn, Melbourne. Reach out to us for inquiries about our exceptional coffee, delightful breakfast and lunch options, and our versatile event space perfect for hosting functions. We look forward to welcoming you to our inviting haven of flavors and hospitality.",
   charset: "UTF-8",
   "og:title": "Cafe Latte Menu",
-  "og:description":  "Connect with Cafe Latte, nestled in the heart of Hawksburn, Melbourne. Reach out to us for inquiries about our exceptional coffee, delightful breakfast and lunch options, and our versatile event space perfect for hosting functions. We look forward to welcoming you to our inviting haven of flavors and hospitality.",
-  "og:image": "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
+  "og:description":
+    "Connect with Cafe Latte, nestled in the heart of Hawksburn, Melbourne. Reach out to us for inquiries about our exceptional coffee, delightful breakfast and lunch options, and our versatile event space perfect for hosting functions. We look forward to welcoming you to our inviting haven of flavors and hospitality.",
+  "og:image":
+    "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
   "og:url": "https://cafelattehawksburn.com/menu",
 });
-};
 </script>
 
 <style scoped>
