@@ -4,13 +4,22 @@
       <div
         class="overlay-content-container pridi flex flex-col justify-center items-center px-10 rounded-lg"
       >
-      <div class="overlay-bg"></div>
-        <img
+        <div class="overlay-bg"></div>
+        <!-- <img
           class="banner-logo my-4"
           src="../../assets/cafeLatteLogoRound.png"
           alt="logo"
-        />
-        <p class="text-2xl text-center mb-8 max-w-[500px] text-white">
+        /> -->
+        <div>
+          <img
+            class="banner-logo my-4"
+            src="../../assets/logoRound.png"
+            alt="logo"
+          />
+        </div>
+        <p
+          class="text-2xl text-center mb-8 max-w-[500px] text-white button-container"
+        >
           Indulge in the Essence of Coffee: Immerse Yourself in the Café Latte
           Experience.
         </p>
@@ -97,24 +106,26 @@ const goToBooking = () => {
   left: 0;
   z-index: -1;
   backdrop-filter: blur(3px);
-  border-radius: 5px
+  border-radius: 5px;
 }
 
-.overlay-content button {
-  // background: rgb(23, 24, 23)
+.overlay-content-container button {
   background: rgb(10, 10, 10);
-  transition-duration: 0.1s;
-  // background: white;
+  transition-duration: 0.2s;
 }
-.overlay-content button:hover {
+.overlay-content-container button:hover {
   background: rgb(20, 20, 20);
   transform: scale(1.03);
-  // background: white;
 }
 
 .banner-logo {
   height: 400px;
   width: 400px;
+}
+
+.button-container button:hover {
+  transition: transform 0.5s ease-in-out;
+  transform: scale(1.2);
 }
 
 @media (max-height: 800px) {

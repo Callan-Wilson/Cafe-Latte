@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { onMounted} from "vue";
+import { onMounted } from "vue";
 import { useContentfulStore } from "../stores/contentfulStore.js";
 import { useAppStore } from "../stores/appStore.js";
 import { useHead } from "@unhead/vue";
@@ -22,7 +22,6 @@ import Banner from "@/components/home/banner.vue";
 import Events from "@/components/home/events.vue";
 import Gallery from "@/components/home/gallery.vue";
 import Location from "@/components/home/location.vue";
-
 
 const apiStore = useContentfulStore();
 const appStore = useAppStore();
@@ -37,8 +36,10 @@ useHead({
     "Indulge in the rich flavors of Cafe Latte, where passion meets perfection in every cup of coffee and every dish served. Experience the vibrant essence of our cozy cafe, where the aroma of freshly brewed coffee and the tantalizing taste of exquisite cuisine come together to create an unforgettable experience.",
   charset: "UTF-8",
   "og:title": "Cafe Latte",
-  "og:description":  "Indulge in the rich flavors of Cafe Latte, where passion meets perfection in every cup of coffee and every dish served. Experience the vibrant essence of our cozy cafe, where the aroma of freshly brewed coffee and the tantalizing taste of exquisite cuisine come together to create an unforgettable experience.",
-  "og:image": "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
+  "og:description":
+    "Indulge in the rich flavors of Cafe Latte, where passion meets perfection in every cup of coffee and every dish served. Experience the vibrant essence of our cozy cafe, where the aroma of freshly brewed coffee and the tantalizing taste of exquisite cuisine come together to create an unforgettable experience.",
+  "og:image":
+    "https://images.ctfassets.net/h4008btd2eyr/6pC4q6oLLBWlgfsNR1tRXC/a668cf65a5be39c95be017aeeab618eb/banner.jpg",
   "og:url": "https://cafelattehawksburn.com",
 });
 </script>
