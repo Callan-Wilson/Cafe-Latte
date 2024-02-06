@@ -5,7 +5,7 @@
         class="events-image flex overflow-hidden items-center justify-center w-full px-4 lg:h-full"
       >
         <img
-          class="object-cover object-top lg:object-center rounded-lg w-full lg:w-auto h-full lg:h-4/5"
+          class="object-cover object-bottom lg:object-center rounded-lg w-full lg:w-auto h-full"
           src="@/assets/storeImage.jpg"
           alt="Image"
         />
