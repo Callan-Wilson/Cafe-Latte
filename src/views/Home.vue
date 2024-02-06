@@ -3,6 +3,7 @@
     <MobileBanner v-if="appStore.isMobile" />
     <Banner v-else />
     <Events />
+    <Store />
     <Gallery class="my-4" />
     <Location />
   </div>
@@ -22,6 +23,7 @@ import Banner from "@/components/home/banner.vue";
 import Events from "@/components/home/events.vue";
 import Gallery from "@/components/home/gallery.vue";
 import Location from "@/components/home/location.vue";
+import Store from "@/components/home/store.vue";
 
 const apiStore = useContentfulStore();
 const appStore = useAppStore();

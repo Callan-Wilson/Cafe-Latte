@@ -3,9 +3,16 @@
     <h1 class="text-4xl mb-8">Get in touch!</h1>
 
     <Spinner v-if="!contactBlurb?.length" class="hidden lg:flex mb-8" />
-    <p v-else class="hidden lg:block text-md text-center mb-8 max-w-[900px]">
-      {{ contactBlurb }}
-    </p>
+    <div v-else class="flex flex-col items-center">
+      <div
+        class="w-full h-[400px] lg:w-[1000px] md:h-[600px] lg:mb-10 lg:rounded overflow-hidden"
+      >
+        <img class="object-cover w-full h-full" :src="banner" />
+      </div>
+      <p class="hidden lg:block text-md text-center mb-8 max-w-[900px]">
+        {{ contactBlurb }}
+      </p>
+    </div>
     <div v-if="!submitted && !loading" class="flex flex-col items-center">
       <div
         :class="[
@@ -174,6 +181,8 @@ const form = ref({
   message: "",
 });
 
+const banner = ref("");
+
 // Replace with your Email.js user ID
 const serviceID = "service_8e1u4xg"; // Replace with your service ID
 const templateID = "template_rgt0b6v"; // Replace with your template ID
@@ -243,6 +252,7 @@ onMounted(async () => {
     await apiStore.getContactContent();
   }
   contactBlurb.value = apiStore?.contact?.text;
+  banner.value = apiStore?.contact?.banner;
 });
 
 useHead({

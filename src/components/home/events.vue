@@ -9,14 +9,16 @@
         <div class="w-full lg:w-4/5 text-center lg:text-left">
           <h1
             v-if="!appStore.isMobile"
-            class="text-2xl lg:text-5xl pridi mb-4 mt-4 lg:mt-0"
+            class="text-3xl lg:text-5xl pridi my-8 lg:mt-0"
           >
             {{ events.heading }}
           </h1>
           <h2 class="text-xl lg:text-3xl pridi my-4">
             {{ events.subheading }}
           </h2>
-          <p class="pridi text-center md:text-left w-full px-8 lg:px-1 lg:text-xl lg:w-4/5+">
+          <p
+            class="pridi text-center md:text-left w-full px-8 lg:px-1 lg:text-xl lg:w-4/5+"
+          >
             {{ events.text }}
           </p>
         </div>
@@ -30,7 +32,7 @@
           alt="Image"
         />
       </div>
-      <h1 class="text-2xl pridi mb-4 mt-4 lg:mt-0 lg:hidden">
+      <h1 class="text-3xl pridi my-8 bold lg:mt-0 lg:hidden">
         {{ events.heading }}
       </h1>
     </template>
@@ -53,17 +55,17 @@ let { events, loaded } = toRefs(store.home);
 </script>
 
 <style lang="scss" scoped>
-.events-image{
+.events-image {
   height: 300px;
 }
 
-@media(min-width: 550px){
-  .events-image{
+@media (min-width: 550px) {
+  .events-image {
     height: 400px;
   }
 }
-@media(min-width: 1024px){
-  .events-image{
+@media (min-width: 1024px) {
+  .events-image {
     height: 100%;
   }
 }

@@ -89,11 +89,7 @@ import { useHead } from "@unhead/vue";
 const contentfulStore = useContentfulStore();
 
 const menuFilters = ref([
-  "All",
-  "Breakfast",
-  "Lunch",
-  "Sweet",
-  "Sides",
+  "All Day Menu",
   "Kids",
   "Hot Drinks",
   "Cold Drinks",
@@ -103,13 +99,20 @@ const loading = ref(false);
 const menuItems = ref([]);
 const menuText = ref("");
 
-const filter = ref("all");
+const filter = ref("all day menu");
 const changing = ref(false);
 
 const filteredMenuItems = computed(() => {
-  if (filter.value === "all") {
-    return menuItems.value;
+  if (filter.value === "all day menu") {
+    return menuItems.value.filter(
+      (item) =>
+        !["Kids", "Hot Drinks", "Cold Drinks", "Smoothies"].includes(
+          item.filter
+        )
+    );
   }
+
+  console.log(filter.value, "filter");
   return menuItems.value.filter((item) => item.filter.includes(filter.value));
 });
 

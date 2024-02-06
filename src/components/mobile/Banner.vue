@@ -6,7 +6,7 @@
       >
         <img
           class="banner-logo my-4"
-          src="../../assets/cafeLatteLogoRound.png"
+          src="../../assets/logoRound.png"
           alt="logo"
         />
         <p class="text-2xl text-center mb-8 max-w-[500px] text-white">
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import {useRouter} from 'vue-router';
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 const goTo = () => {

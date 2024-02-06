@@ -1,21 +1,21 @@
 <template>
   <div class="w-full flex flex-col pb-8 lg:pb-0 lg:flex-row">
-    <div class="w-full lg:w-1/2 pridi p-4">
+    <div class="w-full flex flex-col justify-center lg:w-1/2 pridi p-4">
       <template v-if="loaded">
-        <p class="lg:hidden text-2xl text-center underline my-4 lg:mt-10">
+        <p class="lg:hidden text-3xl text-center underline my-4 lg:mt-10">
           Opening Times
         </p>
-        <p class="lg:hidden text-xl text-center mb-12 lg-mb-0">
+        <p class="lg:hidden text-2xl text-center mb-12 lg-mb-0">
           6am - 3pm, Monday - Sunday
         </p>
-        <h1 class="text-4xl hidden lg:block text-center mb-12 lg:mb-8 underline">
+        <!-- <h1 class="text-4xl hidden lg:block text-center mb-12 lg:mb-8 underline">
           {{ location.heading }}
         </h1>
         <p class="hidden lg:block text-xl text-center md:px-12 mb-10">
           {{ location.text }}
-        </p>
-        <p class="text-2xl text-center underline mb-4">Address</p>
-        <p class="text-center text-xl flex items-center justify-center">
+        </p> -->
+        <p class="text-3xl text-center underline mb-4">Address</p>
+        <p class="text-center text-2xl flex items-center justify-center">
           <span class="mr-2">
             <svg
               class="location-icon"
@@ -52,6 +52,7 @@
           521 Malvern Rd, Toorak VIC 3142
         </p>
         <div
+          v-if="appStore.isMobile"
           class="w-full h-[100vw] max-h-[400px] my-4 lg:hidden lg:w-1/2 overflow-hidden flex items-center justify-center"
         >
           <iframe
@@ -65,16 +66,16 @@
           ></iframe>
         </div>
 
-        <p class="hidden lg:block text-2xl text-center underline my-4 lg:mt-10">
+        <p class="hidden lg:block text-3xl text-center underline mb-4 lg:mt-20">
           Opening Times
         </p>
-        <p class="hidden lg:block text-xl text-center mb-4 lg-mb-0">
-         6am - 3pm, Monday - Sunday
+        <p class="hidden lg:block text-2xl text-center mb-4 lg-mb-0">
+          6am - 3pm, Monday - Sunday
         </p>
       </template>
       <Spinner v-else />
     </div>
-    <div class="hidden lg:block lg:w-1/2 text-center">
+    <div class="hidden lg:block lg:w-1/2 text-center" v-if="!appStore.isMobile">
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3150.524655054859!2d145.00131827674196!3d-37.84801263599772!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad6682b17e1b84b%3A0x8494ab429665d4d0!2sCafe%20Latte!5e0!3m2!1sen!2sau!4v1693493737539!5m2!1sen!2sau"
         class="w-full"
@@ -82,7 +83,7 @@
         style="border: 0px"
         frameborder="0"
         allowfullscreen=""
-        loading="lazy"
+        loading="async"
         referrerpolicy="no-referrer-when-downgrade"
       ></iframe>
     </div>
@@ -92,9 +93,11 @@
 <script setup>
 import { toRefs } from "vue";
 import { useContentfulStore } from "../../stores/contentfulStore";
+import { useAppStore } from "../../stores/appStore";
 import Spinner from "@/components/Spinner.vue";
 
 const store = useContentfulStore();
+const appStore = useAppStore();
 
 let { location, loaded } = toRefs(store.home);
 </script>

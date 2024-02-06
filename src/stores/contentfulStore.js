@@ -31,7 +31,8 @@ export const useContentfulStore = defineStore({
       pdf: ''
     },
     contact:{
-      text: ''
+      text: '',
+      banner: '',
     }
   }),
 
@@ -54,6 +55,8 @@ export const useContentfulStore = defineStore({
         if(!response?.items?.length){
           throw new Error({message: "Couldn't get gallery content"})
         }
+
+        console.log(response)
         let galleryContent = response?.items.map((item) => ({url: item.fields.postUrl, image: utils.getImageUrl(item.fields.image)}))
        
         this.$patch((state) => {
@@ -78,9 +81,7 @@ export const useContentfulStore = defineStore({
     
         let functionsText = response?.items.find((item) => item.fields.title == 'Functions Text').fields.paragraph
         let functionsServices = response?.items.filter((item) => item.fields.title.toLowerCase().includes('card')).map(item => ({text:item.fields.cardText , icon:item.fields.cardIcon.fields.file.url}))
-        let functionsGallery = response?.items.find((item) => item.fields.title == 'Functions Gallery').fields.galleryImage.map((item) => utils.getImageUrl(item))
-
-        console.log(functionsServices, 'service cards');
+        let functionsGallery = response?.items.find((item) => item.fields.title == 'Functions Gallery').fields.galleryImage.map((item) => utils.getImageUrl(item));
   
         this.$patch((state) => {
           state.functions.text = functionsText;
@@ -178,7 +179,7 @@ export const useContentfulStore = defineStore({
             image: item.fields.image.fields.file.url,
             dietary: item.fields.dietary,
             order: item.fields.order,
-            filter: item.fields.filter.map(item => item.toLowerCase()),
+            filter: item.fields.filter ? item.fields.filter.map(item => item.toLowerCase()) : "All Day Menu",
           })).sort((a,b) => a.order - b.order);
         })
         .catch((error) => {
@@ -191,8 +192,8 @@ export const useContentfulStore = defineStore({
         content_type: "contactContent",
       })
       .then((response) => {
-        console.log(response, 'res')
-        this.contact.text = response.items[0].fields.text;
+        this.contact.text = response.items.find(item => item.fields.title.includes('Text')).fields.text;
+        this.contact.banner = response.items.find(item => item.fields.title.includes('Images')).fields.images[0].fields.file.url;
       })
       .catch((error) => {
         console.log("Error:", error);
