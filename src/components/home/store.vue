@@ -15,7 +15,7 @@
       >
         <div class="w-full">
           <p
-            class="pridi w-full mt-8 lg:mt-0 px-8 lg:px-1 lg:text-xl lg:w-4/5 text-center lg:!leading-10"
+            class="pridi w-full mt-8 lg:mt-0 px-8 lg:px-1 lg:text-xl lg:w-4/5 max-w-[600px] text-center lg:!leading-10"
           >
             {{ location.text }}
           </p>

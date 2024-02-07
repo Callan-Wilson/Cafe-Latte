@@ -4,9 +4,11 @@
   >
     <template v-if="loaded">
       <div
-        class="flex flex-col justify-center items-center lg:items-end w-full h-full"
+        class="flex flex-col justify-center items-center lg:items-center w-full h-full"
       >
-        <div class="w-full lg:w-4/5 text-center lg:text-left">
+        <div
+          class="w-full lg:w-auto text-center lg:ml-8 lg:text-left flex flex-col justify-center max-w-[700px]"
+        >
           <h1
             v-if="!appStore.isMobile"
             class="text-3xl lg:text-5xl pridi my-8 lg:mt-0"
