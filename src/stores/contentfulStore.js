@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { createClient } from "contentful";
-import utils from "../utils.js"
+import utils from "../utils.js";
 
 const client = createClient({
   space: "h4008btd2eyr",
@@ -14,158 +14,176 @@ export const useContentfulStore = defineStore({
     home: {
       banner: "",
       events: {},
-      gallery:[],
-      location:{},
+      gallery: [],
+      location: {},
       loaded: false,
       galleryLoaded: false,
     },
-    functions:{
-      text: '',
+    functions: {
+      text: "",
       gallery: [],
       services: [],
-      loaded: false
+      loaded: false,
     },
     menu: {
-      text: '',
+      text: "",
       items: [],
-      pdf: ''
+      pdf: "",
     },
-    contact:{
-      text: '',
-      banner: '',
-    }
+    contact: {
+      text: "",
+      banner: "",
+    },
   }),
 
   actions: {
-    async loadHomeContent(){
+    async loadHomeContent() {
       try {
         await Promise.all([this.getHomeContent(), this.getGalleryContent()]);
-        console.log('Content loaded successfully');
+        console.log("Content loaded successfully");
       } catch (error) {
-        console.error('Error loading content:', error);
+        console.error("Error loading content:", error);
       }
     },
 
-    async getGalleryContent(){
+    async getGalleryContent() {
       await client
-      .getEntries({
-        content_type: "homeGallery",
-      })
-      .then((response) => {
-        if(!response?.items?.length){
-          throw new Error({message: "Couldn't get gallery content"})
-        }
+        .getEntries({
+          content_type: "homeGallery",
+        })
+        .then((response) => {
+          if (!response?.items?.length) {
+            throw new Error({ message: "Couldn't get gallery content" });
+          }
 
-        console.log(response)
-        let galleryContent = response?.items.map((item) => ({url: item.fields.postUrl, image: utils.getImageUrl(item.fields.image)}))
-       
-        this.$patch((state) => {
-          state.home.gallery = galleryContent;
-          state.home.galleryLoaded = true;
+          console.log(response);
+          let galleryContent = response?.items.map((item) => ({
+            url: item.fields.postUrl,
+            image: utils.getImageUrl(item.fields.image),
+          }));
+
+          this.$patch((state) => {
+            state.home.gallery = galleryContent;
+            state.home.galleryLoaded = true;
+          });
+        })
+        .catch((error) => {
+          console.log("Error:", error);
         });
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
     },
 
-    async getFunctionsContent(){
+    async getFunctionsContent() {
       await client
-      .getEntries({
-        content_type: "functionsContent",
-      })
-      .then((response) => {
-        if(!response?.items?.length){
-          throw new Error({message: "Couldn't get gallery content"})
-        }
-    
-        let functionsText = response?.items.find((item) => item.fields.title == 'Functions Text').fields.paragraph
-        let functionsServices = response?.items.filter((item) => item.fields.title.toLowerCase().includes('card')).map(item => ({text:item.fields.cardText , icon:item.fields.cardIcon.fields.file.url}))
-        let functionsGallery = response?.items.find((item) => item.fields.title == 'Functions Gallery').fields.galleryImage.map((item) => utils.getImageUrl(item));
-  
-        this.$patch((state) => {
-          state.functions.text = functionsText;
-          state.functions.gallery = functionsGallery;
-          state.functions.services = functionsServices;
-          state.functions.loaded = true;
-        });
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
-    },
-    async getLocationContent(){
+        .getEntries({
+          content_type: "functionsContent",
+        })
+        .then((response) => {
+          if (!response?.items?.length) {
+            throw new Error({ message: "Couldn't get gallery content" });
+          }
+          console.log(response, "functions res");
 
-    },
+          let functionsText = response?.items.find(
+            (item) => item.fields.title == "Functions Text"
+          ).fields.paragraph;
 
-   async getPdf(){
-      await client
-      .getEntries({
-        content_type: "menuPdf", 
-      })
-      .then((response) => {
-        if(!response){
-          throw new Error({message: "Couldn't get menu pdf"})
-        }
-        //patch state
-        this.$patch((state) => {
-          state.menu.pdf = response.items[0].fields.pdf.fields.file.url;
          
-        });
 
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
+          let functionsGallery = response?.items
+            .find((item) => item.fields.title == "Functions Gallery")
+            .fields.galleryImage.map((item) => utils.getImageUrl(item));
+
+            let functionsServices = response?.items
+            .filter((item, index) => {
+              console.log(item, item.fields.title.toLowerCase().includes("card"), item.fields, index)
+              return item.fields.title.toLowerCase().includes("card")})
+            .map((item) => {
+              console.log(item, 'item in map')
+              return({
+              text: item.fields.cardText,
+              icon: item.fields?.cardIcon?.fields?.file.url,
+            })});
+
+          this.$patch((state) => {
+            state.functions.text = functionsText;
+            state.functions.gallery = functionsGallery;
+            state.functions.services = functionsServices;
+            state.functions.loaded = true;
+          });
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    },
+    async getLocationContent() {},
+
+    async getPdf() {
+      await client
+        .getEntries({
+          content_type: "menuPdf",
+        })
+        .then((response) => {
+          if (!response) {
+            throw new Error({ message: "Couldn't get menu pdf" });
+          }
+          //patch state
+          this.$patch((state) => {
+            state.menu.pdf = response.items[0].fields.pdf.fields.file.url;
+          });
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
     },
 
     async getHomeContent() {
       await client
-      .getEntries({
-        content_type: "homeContent",
-      })
-      .then((response) => {
-        const content = response?.items.map((item) => item.fields)
-        if(!content.length){
-          throw new Error({message: "Couldn't get home content"})
-        }
-        //banner
+        .getEntries({
+          content_type: "homeContent",
+        })
+        .then((response) => {
+          const content = response?.items.map((item) => item.fields);
+          if (!content.length) {
+            throw new Error({ message: "Couldn't get home content" });
+          }
+          //banner
 
-        // events
-        let eventsContent = content.find(item => item.title.includes('Event'))
-        eventsContent.image = utils.getImageUrl(eventsContent.image);
+          // events
+          let eventsContent = content.find((item) =>
+            item.title.includes("Event")
+          );
+          eventsContent.image = utils.getImageUrl(eventsContent.image);
 
-        //location
-        const locationContent = content.find(item => item.title.includes('Location'));
+          //location
+          const locationContent = content.find((item) =>
+            item.title.includes("Location")
+          );
 
-        //patch state
-        this.$patch((state) => {
-          state.home.events = eventsContent;
-          state.home.location = locationContent;
-          state.home.loaded = true;
+          //patch state
+          this.$patch((state) => {
+            state.home.events = eventsContent;
+            state.home.location = locationContent;
+            state.home.loaded = true;
+          });
+        })
+        .catch((error) => {
+          console.log("Error:", error);
         });
-
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
     },
-    async getMenuContent(){
-
+    async getMenuContent() {
       await Promise.all([this.getMenuItems(), this.getMenuText()]);
-   
     },
-    async getMenuText(){
+    async getMenuText() {
       await client
-      .getEntries({
-        content_type: "menuText",
-      })
-      .then((response) => {
-        this.menu.text = response.items[0].fields.text
-    })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
+        .getEntries({
+          content_type: "menuText",
+        })
+        .then((response) => {
+          this.menu.text = response.items[0].fields.text;
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
     },
     async getMenuItems() {
       await client
@@ -173,32 +191,39 @@ export const useContentfulStore = defineStore({
           content_type: "menuItem",
         })
         .then((response) => {
-          this.menu.items = response.items.map((item) => ({
-            title: item.fields.title,
-            description: item.fields.description,
-            image: item.fields.image.fields.file.url,
-            dietary: item.fields.dietary,
-            order: item.fields.order,
-            filter: item.fields.filter ? item.fields.filter.map(item => item.toLowerCase()) : "All Day Menu",
-          })).sort((a,b) => a.order - b.order);
+          this.menu.items = response.items
+            .map((item) => ({
+              title: item.fields.title,
+              description: item.fields.description,
+              image: item.fields.image.fields.file.url,
+              dietary: item.fields.dietary,
+              order: item.fields.order,
+              filter: item.fields.filter
+                ? item.fields.filter.map((item) => item.toLowerCase())
+                : "All Day Menu",
+            }))
+            .sort((a, b) => a.order - b.order);
         })
         .catch((error) => {
           console.log("Error:", error);
         });
     },
-    async getContactContent(){
+    async getContactContent() {
       await client
-      .getEntries({
-        content_type: "contactContent",
-      })
-      .then((response) => {
-        this.contact.text = response.items.find(item => item.fields.title.includes('Text')).fields.text;
-        this.contact.banner = response.items.find(item => item.fields.title.includes('Images')).fields.images[0].fields.file.url;
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      });
-    }
+        .getEntries({
+          content_type: "contactContent",
+        })
+        .then((response) => {
+          this.contact.text = response.items.find((item) =>
+            item.fields.title.includes("Text")
+          ).fields.text;
+          this.contact.banner = response.items.find((item) =>
+            item.fields.title.includes("Images")
+          ).fields.images[0].fields.file.url;
+        })
+        .catch((error) => {
+          console.log("Error:", error);
+        });
+    },
   },
-
 });

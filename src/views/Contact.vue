@@ -5,11 +5,11 @@
     <Spinner v-if="!contactBlurb?.length" class="hidden lg:flex mb-8" />
     <div v-else class="flex flex-col items-center">
       <div
-        class="w-full h-[400px] lg:w-[1000px] md:h-[600px] lg:mb-10 lg:rounded overflow-hidden"
+        class="w-full lg:w-[1000px] md:h-[600px] lg:mb-10 lg:rounded overflow-hidden mb-4"
       >
-        <img class="object-cover w-full h-full" :src="banner" />
+        <img class="object-cover w-full " :src="banner" />
       </div>
-      <p class="hidden lg:block text-md text-center mb-8 max-w-[900px]">
+      <p class="hidden lg:block text-md text-center mb-8 max-w-[900px]" >
         {{ contactBlurb }}
       </p>
     </div>
@@ -40,7 +40,7 @@
         </svg>
         <p class="text-lg pridi text-white ml-2">{{ errorMessage }}</p>
       </div>
-      <div v-if="!appStore.isMobile" class="contact-form px-12">
+      <div v-if="!appStore.isMobile" class="contact-form px-12" id="form">
         <div class="input-row mt-10">
           <div class="input-group">
             <input
@@ -184,7 +184,7 @@ const form = ref({
 const banner = ref("");
 
 // Replace with your Email.js user ID
-const serviceID = "service_8e1u4xg"; // Replace with your service ID
+const serviceID = "service_wyh52rb"; // Replace with your service ID
 const templateID = "template_rgt0b6v"; // Replace with your template ID
 const userId = "gokcdYaHRlxoz_LkJ";
 
@@ -197,7 +197,12 @@ const handleError = (message) => {
   errorMessage.value = message;
 
   showError.value = true;
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if(appStore.isMobile){
+      window.scrollIntoView({ top: 0, behavior: "smooth" });
+    } else {
+      const contactText = document.getElementById('form');
+      contactText.scrollIntoView()
+    }
   return false;
 };
 const validate = () => {
@@ -224,7 +229,14 @@ const sendEmail = async () => {
   };
 
   try {
-    await window.scrollTo({ top: 0, behavior: "smooth" });
+console.log(appStore.isMobile)
+    if(appStore.isMobile){
+      await window.scrollIntoView({ top: 0, behavior: "smooth" });
+    } else {
+      const contactText = document.getElementById('form');
+      contactText.scrollIntoView()
+    }
+    
     loading.value = true;
     const response = await emailjs.send(
       serviceID,
@@ -247,7 +259,6 @@ const sendEmail = async () => {
 };
 
 onMounted(async () => {
-  console.log(apiStore.contact.text, "text");
   if (!apiStore?.contact?.text?.length) {
     await apiStore.getContactContent();
   }
